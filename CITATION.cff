@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: "If you use this data or code, please cite it as below."
+type: dataset
+title: "Conjugate CFD Study of Pulsed Dielectric-Fluid Flow for Thermal Management of an 18650 Battery Module at Equal Pump Energy: data and code"
+# Authors 3 and 4 to be supplied (placeholders below).
+authors:
+  - family-names: "Lakshmipathi"
+    given-names: "Anantha Raman"
+    affiliation: "Department of Mechanical Engineering, Rajalakshmi Institute of Technology, Chennai, India"
+    orcid: "https://orcid.org/0000-0003-3465-286X"
+    email: "raman3366@gmail.com"
+  - family-names: "Balakrishnan"
+    given-names: "Deepanraj"
+    affiliation: "Department of Mechanical Engineering, Prince Mohammad Bin Fahd University, Al-Khobar, Saudi Arabia"
+  - family-names: "AUTHOR 3 FAMILY NAME TO BE ADDED"
+    given-names: "AUTHOR 3 GIVEN NAMES TO BE ADDED"
+    affiliation: "AFFILIATION TO BE ADDED"
+  - family-names: "AUTHOR 4 FAMILY NAME TO BE ADDED"
+    given-names: "AUTHOR 4 GIVEN NAMES TO BE ADDED"
+    affiliation: "AFFILIATION TO BE ADDED"
+version: "1.0.0"
+# doi: to be added after the Zenodo deposit
+# date-released: to be added at release (YYYY-MM-DD)
+license:
+  - MIT
+  - CC-BY-4.0
+keywords:
+  - battery thermal management
+  - immersion cooling
+  - pulsating flow
+  - conjugate heat transfer
+  - pumping energy
+  - lithium-ion battery
+  - "18650"
+  - HFE-7200
+  - OpenFOAM
+abstract: >-
+  Data and code for a conjugate CFD study of steady and pulsed dielectric-fluid
+  flow in single-phase immersion cooling of a six-cell 18650 lithium-ion module
+  (HFE-7200, closed housing, 3C discharge of 900 s), compared at matched pump
+  energy. OpenFOAM v2606 chtMultiRegionFoam, laminar, variable properties.
+  Contains the 14 scored cases (OpenFOAM setup files, all monitor series and a
+  slim solver-log extract per case), the results table, the per-case numerical
+  checks, derived temperature histories, the scripts that regenerate the
+  results table, the checks and the paper's figures from the case archives, and
+  the generator modules that re-create each case's OpenFOAM setup.
+  Code: MIT; data and documentation: CC BY 4.0.

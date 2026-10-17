@@ -1,0 +1,745 @@
+{
+ "key": "steady_Q180",
+ "case_dir": "h_aisee_steady_Q180_medium_dt12.5",
+ "gates": [
+  {
+   "name": "lattice",
+   "ok": true,
+   "detail": "lattice dt=0.0125 s: sample=5, DIAGNOSTIC run"
+  },
+  {
+   "name": "fixed_dt[log.chtMultiRegionFoam#0]",
+   "ok": true,
+   "detail": "fixed dt 0.0125 s: 100.000 % of 74400 steps on dt, step range [0.0125, 0.0125] s"
+  },
+  {
+   "name": "courant",
+   "ok": true,
+   "detail": "Courant claim-region bulk max 0.9826 (limit 1), thin layer max 5.264 (limit 5.6), outflow column max 3.071 (limit 1) over 18600 samples; level medium vs ladder medium; log every-step max 5.264 (limit 5.6); DIAGNOSTIC run: reported, not gated (D-F.1), not claim-eligible"
+  },
+  {
+   "name": "max_principle",
+   "ok": true,
+   "detail": "fluid T in [298.118, 304.684] K; lower bound 298.1 K (T_in - 0.05), upper bound max T_solid"
+  },
+  {
+   "name": "mean_flow",
+   "ok": true,
+   "detail": "Qbar 3e-06 vs intent 3e-06 (-0.000 %; tol 0.50 %) over 900 s"
+  },
+  {
+   "name": "ledger",
+   "ok": true,
+   "detail": "ledger residual +10.334 J = +0.091 % of E_inj 11377.8 J (tol 2.00 %); dH_cells=1589.02, dH_fluid=999.621, dKE=4.31148e-06, out_h=8769.77, out_K=0.00106256, out_cond=-3.28741e-05, out_walls=-0, src_rhoUg=9.10153, src_dpdt=-0.00666534"
+  },
+  {
+   "name": "source_power",
+   "ok": true,
+   "detail": "source power 1 W vs intended 1 W (+0.000e+00, tol 1.0e-04); VDash [1.6513927742577066e-05, 1.6513927781500764e-05, 1.6513927742577073e-05, 1.651392774257707e-05, 1.6513927781500764e-05, 1.6513927742577073e-05] m3, meshed [1.6513927742577066e-05, 1.6513927781500764e-05, 1.6513927742577073e-05, 1.651392774257707e-05, 1.6513927781500764e-05, 1.6513927742577073e-05] m3 (volumeMode absolute)"
+  },
+  {
+   "name": "hydraulic_closure[pre]",
+   "ok": false,
+   "detail": "hydraulic closure residual +3.61e-06 J = +15.08 % of max(|Phi|,|W_b|) 2.394e-05 J (tol 10.0 %, level medium, provisional)"
+  },
+  {
+   "name": "continuity[rhoh_fluid:run]",
+   "ok": true,
+   "detail": "1 segment(s), 18600 samples over [0.05, 930] s, interval 0.05 s, value floor 1e-13"
+  },
+  {
+   "name": "continuity[Tmax_fluid:run]",
+   "ok": true,
+   "detail": "1 segment(s), 18600 samples over [0.05, 930] s, interval 0.05 s, value floor 1e-14"
+  },
+  {
+   "name": "continuity[hphi_outlet:run]",
+   "ok": true,
+   "detail": "1 segment(s), 74400 samples over [0.0125, 930] s, interval 0.0125 s, value floor 1e-15"
+  },
+  {
+   "name": "continuity[qInt_cell0:run]",
+   "ok": true,
+   "detail": "1 segment(s), 18600 samples over [0.05, 930] s, interval 0.05 s, value floor 1e-16"
+  },
+  {
+   "name": "continuity[rhoh_cell0:run]",
+   "ok": true,
+   "detail": "1 segment(s), 18600 samples over [0.05, 930] s, interval 0.05 s, value floor 1e-17"
+  },
+  {
+   "name": "continuity[Tsurfmax_cell0:run]",
+   "ok": true,
+   "detail": "1 segment(s), 18600 samples over [0.05, 930] s, interval 0.05 s, value floor 1e-14"
+  }
+ ],
+ "info": {
+  "claim_eligible": false,
+  "claim_notes": [
+   "diagnostic lattice (ladder/coupling)"
+  ],
+  "courant": {
+   "Co_max_monitor": 5.264269605981106,
+   "t": 338.9,
+   "location_m": [
+    0.0033919590101438224,
+    0.0010700735406026524,
+    0.06502499999999438
+   ],
+   "samples": 18600,
+   "Co_max_last": 4.532812156572783,
+   "location_last_m": [
+    -0.012955940206025007,
+    0.016425317550566032,
+    0.06502499999999438
+   ],
+   "CoThin": {
+    "max": 5.264269605981106,
+    "t": 338.9,
+    "location_m": [
+     0.0033919590101438224,
+     0.0010700735406026524,
+     0.06502499999999438
+    ]
+   },
+   "CoOut": {
+    "max": 3.070617170786266,
+    "t": 507.2,
+    "location_m": [
+     0.08562499999999998,
+     -0.0018750000000000062,
+     0.07215217391281338
+    ]
+   },
+   "CoBulk": {
+    "max": 0.9826315094998949,
+    "t": 510.25,
+    "location_m": [
+     0.07813277028055739,
+     -0.005626687851229214,
+     0.06485257534512551
+    ]
+   },
+   "CoBulkSleeves": {
+    "max": 1.3752303756544522,
+    "t": 120.2,
+    "location_m": [
+     0.02993712879169492,
+     0.008135631838249334,
+     0.06748759229104341
+    ],
+    "limit": 1.0,
+    "within": false,
+    "note": "D-F.9 (1) sensitivity: the claim-region bulk with D-F.1's registered sleeves (8 <= r <= 10 mm) in place of T_head; reported, not gated"
+   },
+   "regions": "D-F.9",
+   "bounds_medium": {
+    "thin_B": 5.6,
+    "outflow_B_out": 1.0,
+    "claim_bulk": 1.0
+   }
+  },
+  "max_principle_detail": {
+   "worst_K": -0.03156351785764855,
+   "t": 94.85,
+   "t_after_heat_on": 64.85,
+   "below_20mK": {
+    "n": 93,
+    "t_first": 92.0,
+    "t_last": 99.5
+   },
+   "location_mm": [
+    -10.889,
+    -0.285,
+    28.075
+   ],
+   "in_interstice": true,
+   "minima_mK": {
+    "30-130": {
+     "all": {
+      "worst_mK": -31.56351785764855,
+      "t": 94.85,
+      "location_mm": [
+       -10.89,
+       -0.28,
+       28.07
+      ],
+      "n": 2000
+     },
+     "interstice": {
+      "worst_mK": -31.56351785764855,
+      "t": 94.85,
+      "location_mm": [
+       -10.89,
+       -0.28,
+       28.07
+      ],
+      "n": 1109
+     }
+    },
+    "130-930": {
+     "all": {
+      "worst_mK": -9.061395558660479,
+      "t": 226.95,
+      "location_mm": [
+       -27.61,
+       -3.01,
+       25.6
+      ],
+      "n": 16000
+     },
+     "interstice": {
+      "worst_mK": -7.525601822521821,
+      "t": 466.0,
+      "location_mm": [
+       -11.86,
+       -1.24,
+       6.95
+      ],
+      "n": 5568
+     }
+    },
+    "30-930": {
+     "all": {
+      "worst_mK": -31.56351785764855,
+      "t": 94.85,
+      "location_mm": [
+       -10.89,
+       -0.28,
+       28.07
+      ],
+      "n": 18000
+     },
+     "interstice": {
+      "worst_mK": -31.56351785764855,
+      "t": 94.85,
+      "location_mm": [
+       -10.89,
+       -0.28,
+       28.07
+      ],
+      "n": 6677
+     }
+    }
+   },
+   "episode_window": "30-130",
+   "primary_window_overlap": {
+    "last 20 %": {
+     "window": [
+      750.0,
+      930.0
+     ],
+     "worst_K": -0.005386682135110732,
+     "holds_worst": false,
+     "n_below_20mK": 0
+    },
+    "last 50 %": {
+     "window": [
+      480.0,
+      930.0
+     ],
+     "worst_K": -0.005386682135110732,
+     "holds_worst": false,
+     "n_below_20mK": 0
+    },
+    "last 100 %": {
+     "window": [
+      30.0,
+      930.0
+     ],
+     "worst_K": -0.03156351785764855,
+     "holds_worst": true,
+     "n_below_20mK": 93
+    }
+   }
+  },
+  "T_fluid_range_K": [
+   298.11843648214233,
+   304.68374726015037
+  ],
+  "T_fluid_range_pre_K": [
+   298.1485645270914,
+   298.1502627175055
+  ],
+  "T_solid_max_K": 304.9900143392338,
+  "ledger": {
+   "window": [
+    30.0,
+    930.0
+   ],
+   "form": "backward (BDF2) discrete",
+   "E_inj": 11377.845543771105,
+   "terms": {
+    "dH_cells": 1589.0226116090064,
+    "dH_fluid": 999.6214005986856,
+    "dKE": 4.311475171216981e-06,
+    "out_h": 8769.771660335726,
+    "out_K": 0.001062556268792036,
+    "out_cond": -3.287413682762534e-05,
+    "out_walls": -0.0,
+    "src_rhoUg": 9.101532937588516,
+    "src_dpdt": -0.00666534300652021
+   },
+   "residual": 10.33396963949781,
+   "residual_rel": 0.000908253640791883,
+   "naive_terms": {
+    "dH_cells": 1589.0197353457552,
+    "dH_fluid": 999.6207445936536,
+    "dKE": 4.307953337928834e-06,
+    "out_h": 8769.69468897532,
+    "out_K": 0.001062532587651544,
+    "out_cond": -3.287375626540175e-05,
+    "out_walls": -0.0,
+    "src_rhoUg": 9.101532826988022,
+    "src_dpdt": -0.006662998423929447
+   },
+   "naive_residual": 10.414471061027143,
+   "naive_residual_rel": 0.00091532891890316,
+   "restart_at_t_pre": false,
+   "restarts_inside": [],
+   "store_increments": {
+    "cell0": {
+     "d_start": -4.0213683021261473e-08,
+     "d_end": 0.0009403629655659555,
+     "d_restart": []
+    },
+    "cell1": {
+     "d_start": 8.136420716955033e-08,
+     "d_end": 0.0010153671553619146,
+     "d_restart": []
+    },
+    "cell2": {
+     "d_start": 6.994980182779211e-08,
+     "d_end": 0.0009265205478933935,
+     "d_restart": []
+    },
+    "cell3": {
+     "d_start": -4.10021572459204e-08,
+     "d_end": 0.0009073421207838531,
+     "d_restart": []
+    },
+    "cell4": {
+     "d_start": 8.146048705823438e-08,
+     "d_end": 0.0009067798607852927,
+     "d_restart": []
+    },
+    "cell5": {
+     "d_start": 7.002082058122444e-08,
+     "d_end": 0.0010563754313902168,
+     "d_restart": []
+    },
+    "rhoh_fluid": {
+     "d_start": -4.8427449659142754e-05,
+     "d_end": 0.0012635826142013808,
+     "d_restart": []
+    },
+    "KE_fluid": {
+     "d_start": 7.342055444610561e-11,
+     "d_end": 7.117087130739809e-09,
+     "d_restart": []
+    }
+   },
+   "per_cell": {
+    "cell0": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 262.0381239326643,
+     "storage": 262.0385941342539,
+     "restart_loss": 0.0,
+     "E_interface": 1633.8081050360786,
+     "residual_rel": 0.00024304678231680155
+    },
+    "cell1": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 263.10260732738953,
+     "storage": 263.1031149702851,
+     "restart_loss": 0.0,
+     "E_interface": 1632.742092087047,
+     "residual_rel": 0.00024383363409530078
+    },
+    "cell2": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 269.34453237600997,
+     "storage": 269.344995601309,
+     "restart_loss": 0.0,
+     "E_interface": 1626.499992719329,
+     "residual_rel": 0.000243948982836893
+    },
+    "cell3": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 261.9767891438558,
+     "storage": 261.97724283541726,
+     "restart_loss": 0.0,
+     "E_interface": 1633.8720589303584,
+     "residual_rel": 0.00024167432805035673
+    },
+    "cell4": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 263.1597912504662,
+     "storage": 263.1602445996663,
+     "restart_loss": 0.0,
+     "E_interface": 1632.6847934401512,
+     "residual_rel": 0.00024392276389436073
+    },
+    "cell5": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 269.3978913153694,
+     "storage": 269.3984194680747,
+     "restart_loss": 0.0,
+     "E_interface": 1626.45415147257,
+     "residual_rel": 0.0002399503593834575
+    }
+   }
+  },
+  "hydraulic": {
+   "window": [
+    30.0,
+    930.0
+   ],
+   "stage": "run",
+   "waveform": "steady",
+   "period_s": null,
+   "developed": true,
+   "window_note": "900 s steady",
+   "gated": false,
+   "gate_note": "reported, not gated: heated run (the residual measures the discretisation of the buoyant flow, not the port-work instrument)",
+   "sine_checks": null,
+   "square_split": null,
+   "r_per_period": null,
+   "split_note": "",
+   "E_port": -0.0161440763430525,
+   "W_b": 0.023837308172512395,
+   "W_b_port_estimate": 0.027082799464984424,
+   "Phi": 0.005078483894214604,
+   "dKE": 4.307953337928834e-06,
+   "KE_exchanged": 0.0008198129821127102,
+   "valve_edge_steps": null,
+   "E_edge_model": null,
+   "closure_less_edge_model": null,
+   "closure_less_edge_model_rel_phi": null,
+   "E_forced_measured": 0.007693231829459895,
+   "closure_residual": 0.0026104399819073636,
+   "closure_rel": 0.1095106864842042,
+   "phi_face": null,
+   "negative_E_port": true,
+   "note": "E_port is the D-P validation column; the primary energy basis is E_diss, the dissipative work of the isothermal impedance model (D-P.1, D-P.3: scripts/post/pump_energy.py primary). A negative E_port is chimney-driven flow, never a pump saving"
+  },
+  "hydraulic_pre": {
+   "window": [
+    2.0,
+    30.0
+   ],
+   "stage": "pre",
+   "waveform": "steady",
+   "period_s": null,
+   "developed": true,
+   "window_note": "28 s steady",
+   "gated": true,
+   "gate_note": "gated: isothermal steady window (pre), developed",
+   "sine_checks": null,
+   "square_split": null,
+   "r_per_period": null,
+   "split_note": "",
+   "E_port": 3.0320804914419487e-05,
+   "W_b": -1.6895505919957096e-07,
+   "W_b_port_estimate": -3.5974419269898575e-07,
+   "Phi": 2.394162264519592e-05,
+   "dKE": 2.6005257142344492e-06,
+   "KE_exchanged": 2.6005257142344492e-06,
+   "valve_edge_steps": null,
+   "E_edge_model": null,
+   "closure_less_edge_model": null,
+   "closure_less_edge_model_rel_phi": null,
+   "E_forced_measured": 3.0151849855219916e-05,
+   "closure_residual": 3.609701495789546e-06,
+   "closure_rel": 0.1507709627406504,
+   "phi_face": null,
+   "negative_E_port": false,
+   "note": ""
+  },
+  "T_surface_max_K": 304.87958604445714,
+  "T_module_mean_end_K": 303.7014422262191,
+  "dT_cell_end_K": 0.15555868715557608,
+  "outlet_backflow_fraction": 0.2780573573208306,
+  "outlet": {
+   "backflow": {
+    "0-30": 0.0,
+    "30-100": 0.0842244080927254,
+    "100-930": 0.29037412303852955,
+    "30-930": 0.28196308875445286
+   },
+   "bursts": [
+    {
+     "t0": 378.35,
+     "t1": 379.65,
+     "u_max_mm_s": 71.32831817433053,
+     "t_umax": 378.9,
+     "location_mm": [
+      84.37,
+      5.62,
+      234.29
+     ],
+     "ke_max": 2.0396091288119238e-05,
+     "ke_ratio": 1.5206854770284726
+    },
+    {
+     "t0": 497.65,
+     "t1": 518.6,
+     "u_max_mm_s": 179.46786550396388,
+     "t_umax": 500.2,
+     "location_mm": [
+      84.37,
+      3.13,
+      234.29
+     ],
+     "ke_max": 0.0001284572749835571,
+     "ke_ratio": 9.577477847431284
+    },
+    {
+     "t0": 629.15,
+     "t1": 631.4,
+     "u_max_mm_s": 62.59740655688802,
+     "t_umax": 629.25,
+     "location_mm": [
+      85.62,
+      -6.87,
+      234.29
+     ],
+     "ke_max": 1.715334006165654e-05,
+     "ke_ratio": 1.2789134322754405
+    },
+    {
+     "t0": 649.15,
+     "t1": 654.45,
+     "u_max_mm_s": 86.06697526891135,
+     "t_umax": 650.45,
+     "location_mm": [
+      84.38,
+      -12.02,
+      234.29
+     ],
+     "ke_max": 2.4952778803825698e-05,
+     "ke_ratio": 1.86042157796111
+    },
+    {
+     "t0": 671.05,
+     "t1": 672.1,
+     "u_max_mm_s": 63.42850414985815,
+     "t_umax": 671.4,
+     "location_mm": [
+      83.12,
+      -20.33,
+      234.29
+     ],
+     "ke_max": 1.522261035176607e-05,
+     "ke_ratio": 1.1349626826723498
+    },
+    {
+     "t0": 685.55,
+     "t1": 692.9,
+     "u_max_mm_s": 100.20534513831903,
+     "t_umax": 689.35,
+     "location_mm": [
+      84.37,
+      -15.26,
+      234.29
+     ],
+     "ke_max": 3.468100805695399e-05,
+     "ke_ratio": 2.5857358910546697
+    },
+    {
+     "t0": 708.7,
+     "t1": 709.75,
+     "u_max_mm_s": 62.994690644780526,
+     "t_umax": 708.9,
+     "location_mm": [
+      84.38,
+      -21.4,
+      234.29
+     ],
+     "ke_max": 1.4587687753821034e-05,
+     "ke_ratio": 1.0876243196451838
+    },
+    {
+     "t0": 722.9,
+     "t1": 723.8,
+     "u_max_mm_s": 65.05385465720266,
+     "t_umax": 723.25,
+     "location_mm": [
+      83.12,
+      -21.4,
+      234.29
+     ],
+     "ke_max": 1.5918534175254952e-05,
+     "ke_ratio": 1.186849156239671
+    },
+    {
+     "t0": 746.6,
+     "t1": 753.25,
+     "u_max_mm_s": 72.73285997189551,
+     "t_umax": 749.45,
+     "location_mm": [
+      88.13,
+      20.33,
+      234.29
+     ],
+     "ke_max": 2.543851186237282e-05,
+     "ke_ratio": 1.8966367133716626
+    },
+    {
+     "t0": 772.6,
+     "t1": 773.1,
+     "u_max_mm_s": 61.898904323806725,
+     "t_umax": 772.75,
+     "location_mm": [
+      88.13,
+      21.69,
+      234.29
+     ],
+     "ke_max": 1.457803068572138e-05,
+     "ke_ratio": 1.0869043109434002
+    },
+    {
+     "t0": 781.95,
+     "t1": 790.65,
+     "u_max_mm_s": 86.6710142376573,
+     "t_umax": 783.15,
+     "location_mm": [
+      85.63,
+      -10.69,
+      234.29
+     ],
+     "ke_max": 2.4942009415266746e-05,
+     "ke_ratio": 1.8596186372139476
+    },
+    {
+     "t0": 805.55,
+     "t1": 809.35,
+     "u_max_mm_s": 104.34715384671802,
+     "t_umax": 807.65,
+     "location_mm": [
+      86.88,
+      -14.29,
+      234.29
+     ],
+     "ke_max": 2.3791666179415285e-05,
+     "ke_ratio": 1.7738517014003081
+    },
+    {
+     "t0": 817.6,
+     "t1": 818.75,
+     "u_max_mm_s": 64.34601024777164,
+     "t_umax": 817.9,
+     "location_mm": [
+      85.63,
+      -20.33,
+      234.29
+     ],
+     "ke_max": 1.683968270148285e-05,
+     "ke_ratio": 1.255527863656366
+    },
+    {
+     "t0": 831.25,
+     "t1": 836.75,
+     "u_max_mm_s": 104.61050466937482,
+     "t_umax": 833.0,
+     "location_mm": [
+      86.88,
+      10.69,
+      234.29
+     ],
+     "ke_max": 3.9437243932034215e-05,
+     "ke_ratio": 2.9403498569555473
+    },
+    {
+     "t0": 849.0,
+     "t1": 854.6,
+     "u_max_mm_s": 90.26117547775586,
+     "t_umax": 850.1,
+     "location_mm": [
+      85.62,
+      12.02,
+      234.29
+     ],
+     "ke_max": 2.9204878446953776e-05,
+     "ke_ratio": 2.1774483103306275
+    },
+    {
+     "t0": 875.3,
+     "t1": 902.85,
+     "u_max_mm_s": 132.68742680396258,
+     "t_umax": 886.5,
+     "location_mm": [
+      85.62,
+      -0.62,
+      234.29
+     ],
+     "ke_max": 7.033295054472891e-05,
+     "ke_ratio": 5.2438624116294354
+    }
+   ],
+   "burst_u_mm_s": 60.0,
+   "burst_z_mm": 200.0,
+   "ke_ref_median": 1.3412432482734463e-05,
+   "ke_ref_window": [
+    300.0,
+    930.0
+   ]
+  },
+  "precirc": {
+   "applicable": true,
+   "gated": false,
+   "case": "h_aisee_steady_Q180_medium_dt12.5",
+   "t_pre": 30.0,
+   "window_s": 10.0,
+   "metric_dp": "mean",
+   "windows_dp": [
+    [
+     10.0,
+     0.7427487050854079
+    ],
+    [
+     20.0,
+     0.37464208588853887
+    ],
+    [
+     30.0,
+     0.3753817783860456
+    ]
+   ],
+   "windows_ke": [
+    [
+     10.0,
+     5.799568227611743e-06
+    ],
+    [
+     20.0,
+     7.789312336484394e-06
+    ],
+    [
+     30.0,
+     8.34447897418742e-06
+    ]
+   ],
+   "last_changes_dp": [
+    0.4956004859739753,
+    0.001970507201194009
+   ],
+   "last_changes_ke": [
+    0.25544541326875286,
+    0.06653101283140189
+   ],
+   "rel_tol": 0.01,
+   "stationary": false,
+   "notes": [
+    "only 3 complete 10 s window(s) in the 30 s pre-run; NEW-14 needs 4",
+    "NOT stationary: re-run the pre-circulation once at t_pre = 60 s (NEW-14.1); a second failure is a hard failure, reported"
+   ]
+  }
+ }
+}

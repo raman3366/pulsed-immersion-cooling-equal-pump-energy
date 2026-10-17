@@ -1,0 +1,38 @@
+{
+  "title": "Conjugate CFD Study of Pulsed Dielectric-Fluid Flow for Thermal Management of an 18650 Battery Module at Equal Pump Energy: data and code",
+  "upload_type": "dataset",
+  "description": "<p>Data and code for a conjugate CFD study of steady and pulsed dielectric-fluid flow in single-phase immersion cooling of a six-cell 18650 lithium-ion module (HFE-7200 in a closed housing, 3C discharge of 900 s), compared at matched pump energy: at the same mean flow a pulsed schedule always costs more pumping energy than steady flow, because &lt;Q&sup2;&gt; &ge; &lt;Q&gt;&sup2;. Solver: OpenFOAM v2606 (ESI) chtMultiRegionFoam, laminar, variable properties, structured multi-block mesh.</p><p>Contents: the 14 scored cases (OpenFOAM setup files, every monitor series and a slim solver-log extract per case, as tar.xz archives), the results table, the per-case numerical checks, derived temperature histories, the Python scripts that regenerate the results table, the checks and the paper's figures from the case archives (scripts/reproduce.sh), and the generator modules that re-create each case's OpenFOAM setup (Allrun.pre). Field data, meshes and full solver logs are not included and are available from the authors on request.</p><p>Code (scripts/): MIT License. Data and documentation: CC BY 4.0 (see LICENSE and LICENSE-DATA).</p>",
+  "creators": [
+    {
+      "name": "Lakshmipathi, Anantha Raman",
+      "affiliation": "Rajalakshmi Institute of Technology",
+      "orcid": "0000-0003-3465-286X"
+    },
+    {
+      "name": "Balakrishnan, Deepanraj",
+      "affiliation": "Prince Mohammad Bin Fahd University"
+    },
+    {
+      "name": "AUTHOR 3 TO BE ADDED (Family name, Given names)",
+      "affiliation": "AFFILIATION TO BE ADDED"
+    },
+    {
+      "name": "AUTHOR 4 TO BE ADDED (Family name, Given names)",
+      "affiliation": "AFFILIATION TO BE ADDED"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "access_right": "open",
+  "version": "1.0.0",
+  "keywords": [
+    "battery thermal management",
+    "immersion cooling",
+    "pulsating flow",
+    "conjugate heat transfer",
+    "pumping energy",
+    "lithium-ion battery",
+    "18650",
+    "HFE-7200",
+    "OpenFOAM"
+  ]
+}

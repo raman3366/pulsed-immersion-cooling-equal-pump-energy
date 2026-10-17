@@ -1,0 +1,759 @@
+{
+ "key": "C2p_Q64.2",
+ "case_dir": "h_aisee_sq0.5D0.5_Q64.2_medium_dt12.5",
+ "gates": [
+  {
+   "name": "lattice",
+   "ok": true,
+   "detail": "lattice dt=0.0125 s: sample=10, valve_edge=4, period=160, quarter_period=40, eighth_period=20, on_time=80, n_phi=16"
+  },
+  {
+   "name": "fixed_dt[log.chtMultiRegionFoam#0]",
+   "ok": true,
+   "detail": "fixed dt 0.0125 s: 100.000 % of 74400 steps on dt, step range [0.0125, 0.0125] s"
+  },
+  {
+   "name": "courant",
+   "ok": true,
+   "detail": "Courant claim-region bulk max 0.8768 (limit 1), thin layer max 4.453 (limit 5.6), outflow column max 1.143 (limit 1) over 74400 samples; level medium vs ladder medium; log every-step max 4.453 (limit 5.6); DIAGNOSTIC run: reported, not gated (D-F.1), not claim-eligible"
+  },
+  {
+   "name": "max_principle",
+   "ok": true,
+   "detail": "fluid T in [298.134, 306.629] K; lower bound 298.1 K (T_in - 0.05), upper bound max T_solid"
+  },
+  {
+   "name": "mean_flow",
+   "ok": true,
+   "detail": "Qbar 1.07e-06 vs intent 1.07e-06 (-0.000 %; tol 0.50 %) over 450 periods"
+  },
+  {
+   "name": "ledger",
+   "ok": true,
+   "detail": "ledger residual +11.9656 J = +0.105 % of E_inj 11377.8 J (tol 2.00 %); dH_cells=2103.65, dH_fluid=3505.02, dKE=4.27331e-06, out_h=5753.98, out_K=0.000123256, out_cond=-0.000566458, out_walls=-0, src_rhoUg=3.25435, src_dpdt=-0.0339583"
+  },
+  {
+   "name": "source_power",
+   "ok": true,
+   "detail": "source power 1 W vs intended 1 W (+0.000e+00, tol 1.0e-04); VDash [1.6513927742577073e-05, 1.6513927781500768e-05, 1.651392774257707e-05, 1.6513927742577073e-05, 1.6513927781500764e-05, 1.6513927742577063e-05] m3, meshed [1.6513927742577073e-05, 1.6513927781500768e-05, 1.651392774257707e-05, 1.6513927742577073e-05, 1.6513927781500764e-05, 1.6513927742577063e-05] m3 (volumeMode absolute)"
+  },
+  {
+   "name": "continuity[rhoh_fluid:run]",
+   "ok": true,
+   "detail": "1 segment(s), 37200 samples over [0.025, 930] s, interval 0.025 s, value floor 1e-13"
+  },
+  {
+   "name": "continuity[Tmax_fluid:run]",
+   "ok": true,
+   "detail": "1 segment(s), 37200 samples over [0.025, 930] s, interval 0.025 s, value floor 1e-14"
+  },
+  {
+   "name": "continuity[hphi_outlet:run]",
+   "ok": true,
+   "detail": "1 segment(s), 74400 samples over [0.0125, 930] s, interval 0.0125 s, value floor 1e-15"
+  },
+  {
+   "name": "continuity[qInt_cell0:run]",
+   "ok": true,
+   "detail": "1 segment(s), 37200 samples over [0.025, 930] s, interval 0.025 s, value floor 1e-16"
+  },
+  {
+   "name": "continuity[rhoh_cell0:run]",
+   "ok": true,
+   "detail": "1 segment(s), 37200 samples over [0.025, 930] s, interval 0.025 s, value floor 1e-17"
+  },
+  {
+   "name": "continuity[Tsurfmax_cell0:run]",
+   "ok": true,
+   "detail": "1 segment(s), 37200 samples over [0.025, 930] s, interval 0.025 s, value floor 1e-14"
+  }
+ ],
+ "info": {
+  "claim_eligible": false,
+  "claim_notes": [
+   "diagnostic lattice (ladder/coupling)"
+  ],
+  "courant": {
+   "Co_max_monitor": 4.452657463696656,
+   "t": 87.1,
+   "location_m": [
+    -0.014912275986736286,
+    -0.0017932482613076737,
+    0.06502499999999437
+   ],
+   "samples": 74400,
+   "Co_max_last": 2.138252454660254,
+   "location_last_m": [
+    -0.006258744319297334,
+    0.016878849916486423,
+    0.06502499999999438
+   ],
+   "CoThin": {
+    "max": 4.452657463696656,
+    "t": 87.1,
+    "location_m": [
+     -0.014912275986736286,
+     -0.0017932482613076737,
+     0.06502499999999437
+    ]
+   },
+   "CoOut": {
+    "max": 1.1428058718330858,
+    "t": 361.975,
+    "location_m": [
+     0.083125,
+     0.016939656417510763,
+     0.07215217391281341
+    ]
+   },
+   "CoBulk": {
+    "max": 0.8768256429147758,
+    "t": 87.2875,
+    "location_m": [
+     -0.015034715508107137,
+     0.0033378666484130542,
+     0.06704976961734838
+    ]
+   },
+   "CoBulkSleeves": {
+    "max": 1.005457361893333,
+    "t": 88.975,
+    "location_m": [
+     0.029619883481802962,
+     -0.007180262389514945,
+     0.06704976961734838
+    ],
+    "limit": 1.0,
+    "within": false,
+    "note": "D-F.9 (1) sensitivity: the claim-region bulk with D-F.1's registered sleeves (8 <= r <= 10 mm) in place of T_head; reported, not gated"
+   },
+   "regions": "D-F.9",
+   "bounds_medium": {
+    "thin_B": 5.6,
+    "outflow_B_out": 1.0,
+    "claim_bulk": 1.0
+   }
+  },
+  "max_principle_detail": {
+   "worst_K": -0.01632928941398859,
+   "t": 48.775,
+   "t_after_heat_on": 18.775,
+   "phase": 0.3875,
+   "below_20mK": {
+    "n": 0,
+    "t_first": null,
+    "t_last": null
+   },
+   "location_mm": [
+    8.585,
+    0.807,
+    66.112
+   ],
+   "in_interstice": true,
+   "minima_mK": {
+    "30-130": {
+     "all": {
+      "worst_mK": -16.32928941398859,
+      "t": 48.775,
+      "location_mm": [
+       8.58,
+       0.81,
+       66.11
+      ],
+      "n": 4000
+     },
+     "interstice": {
+      "worst_mK": -16.32928941398859,
+      "t": 48.775,
+      "location_mm": [
+       8.58,
+       0.81,
+       66.11
+      ],
+      "n": 1994
+     }
+    },
+    "130-930": {
+     "all": {
+      "worst_mK": -6.0565179507534594,
+      "t": 218.025,
+      "location_mm": [
+       -11.42,
+       0.81,
+       8.73
+      ],
+      "n": 32000
+     },
+     "interstice": {
+      "worst_mK": -6.0565179507534594,
+      "t": 218.025,
+      "location_mm": [
+       -11.42,
+       0.81,
+       8.73
+      ],
+      "n": 1282
+     }
+    },
+    "30-930": {
+     "all": {
+      "worst_mK": -16.32928941398859,
+      "t": 48.775,
+      "location_mm": [
+       8.58,
+       0.81,
+       66.11
+      ],
+      "n": 36000
+     },
+     "interstice": {
+      "worst_mK": -16.32928941398859,
+      "t": 48.775,
+      "location_mm": [
+       8.58,
+       0.81,
+       66.11
+      ],
+      "n": 3276
+     }
+    }
+   },
+   "episode_window": "30-130",
+   "primary_window_overlap": {
+    "last 20 %": {
+     "window": [
+      750.0,
+      930.0
+     ],
+     "worst_K": -0.002306324716528252,
+     "holds_worst": false,
+     "n_below_20mK": 0
+    },
+    "last 50 %": {
+     "window": [
+      480.0,
+      930.0
+     ],
+     "worst_K": -0.00394706193986849,
+     "holds_worst": false,
+     "n_below_20mK": 0
+    },
+    "last 100 %": {
+     "window": [
+      30.0,
+      930.0
+     ],
+     "worst_K": -0.01632928941398859,
+     "holds_worst": true,
+     "n_below_20mK": 0
+    }
+   }
+  },
+  "T_fluid_range_K": [
+   298.133670710586,
+   306.6292130990551
+  ],
+  "T_fluid_range_pre_K": [
+   298.1492226845459,
+   298.15016012029304
+  ],
+  "T_solid_max_K": 306.74961753329444,
+  "ledger": {
+   "window": [
+    30.0,
+    930.0
+   ],
+   "form": "backward (BDF2) discrete",
+   "E_inj": 11377.845543771105,
+   "terms": {
+    "dH_cells": 2103.652739389525,
+    "dH_fluid": 3505.0230980824726,
+    "dKE": 4.273309090869009e-06,
+    "out_h": 5753.984189354505,
+    "out_K": 0.00012325638612819366,
+    "out_cond": -0.0005664580587273917,
+    "out_walls": -0.0,
+    "src_rhoUg": 3.2543450666026574,
+    "src_dpdt": -0.03395832877312451
+   },
+   "residual": 11.96556913513632,
+   "residual_rel": 0.0010516550861148725,
+   "naive_terms": {
+    "dH_cells": 2103.6475011491752,
+    "dH_fluid": 3504.9838938335542,
+    "dKE": 4.268989470037264e-06,
+    "out_h": 5753.918041064214,
+    "out_K": 0.00012325326254069985,
+    "out_cond": -0.0005664562501913631,
+    "out_walls": -0.0,
+    "src_rhoUg": 3.2543450050078873,
+    "src_dpdt": -0.03396498896270935
+   },
+   "naive_residual": 12.076166642114913,
+   "naive_residual_rel": 0.0010613755122318486,
+   "restart_at_t_pre": false,
+   "restarts_inside": [],
+   "store_increments": {
+    "cell0": {
+     "d_start": 2.2365205055431013e-06,
+     "d_end": 0.001799312721574824,
+     "d_restart": []
+    },
+    "cell1": {
+     "d_start": 2.1605220600966167e-06,
+     "d_end": 0.001757300800393757,
+     "d_restart": []
+    },
+    "cell2": {
+     "d_start": 2.0724160146524133e-06,
+     "d_end": 0.0016701006636609874,
+     "d_restart": []
+    },
+    "cell3": {
+     "d_start": 2.2363794312790685e-06,
+     "d_end": 0.0017923381462895053,
+     "d_restart": []
+    },
+    "cell4": {
+     "d_start": 2.1602968065605647e-06,
+     "d_end": 0.0017807839530535427,
+     "d_restart": []
+    },
+    "cell5": {
+     "d_start": 2.072257641183899e-06,
+     "d_end": 0.0016895828060527853,
+     "d_restart": []
+    },
+    "rhoh_fluid": {
+     "d_start": 0.02173219070442522,
+     "d_end": 0.10014068854125084,
+     "d_restart": []
+    },
+    "KE_fluid": {
+     "d_start": 5.18629317975809e-07,
+     "d_end": 5.272685596393001e-07,
+     "d_restart": []
+    }
+   },
+   "per_cell": {
+    "cell0": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 347.64802098061756,
+     "storage": 347.6489195187181,
+     "restart_loss": 0.0,
+     "E_interface": 1548.2000785814867,
+     "residual_rel": 0.00024183446323741993
+    },
+    "cell1": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 351.15326031584226,
+     "storage": 351.1541378859814,
+     "restart_loss": 0.0,
+     "E_interface": 1544.7119063376906,
+     "residual_rel": 0.00023284535010435317
+    },
+    "cell2": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 353.0242067567745,
+     "storage": 353.02504077089833,
+     "restart_loss": 0.0,
+     "E_interface": 1542.8384992247175,
+     "residual_rel": 0.00023416593125303995
+    },
+    "cell3": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 347.66685549057433,
+     "storage": 347.6677505414578,
+     "restart_loss": 0.0,
+     "E_interface": 1548.1898276518077,
+     "residual_rel": 0.00023730983173619337
+    },
+    "cell4": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 351.15345554751934,
+     "storage": 351.1543448593475,
+     "restart_loss": 0.0,
+     "E_interface": 1544.7076261959833,
+     "residual_rel": 0.00023499329717872118
+    },
+    "cell5": {
+     "E_inj": 1896.3075906285176,
+     "E_tilt": 0.0,
+     "dH": 353.0017020578474,
+     "storage": 353.0025458131216,
+     "restart_loss": 0.0,
+     "E_interface": 1542.8656805414105,
+     "residual_rel": 0.00023169462388732172
+    }
+   }
+  },
+  "hydraulic": {
+   "window": [
+    30.0,
+    930.0
+   ],
+   "stage": "run",
+   "waveform": "square",
+   "period_s": 2.0,
+   "developed": true,
+   "window_note": "450 whole periods",
+   "gated": false,
+   "gate_note": "reported, not gated: heated run (the residual measures the discretisation of the buoyant flow, not the port-work instrument)",
+   "sine_checks": null,
+   "square_split": {
+    "segments": {
+     "opening_edge": {
+      "ep": 2.191806008670203e-06,
+      "phi": 1.5250175740977603e-07,
+      "wb": 9.63038866401539e-07,
+      "dke": 2.837559292144714e-06,
+      "r": 1.6478382551725187e-07,
+      "steps": 4
+     },
+     "on": {
+      "ep": -3.0026716047339068e-05,
+      "phi": 2.9115216564957567e-06,
+      "wb": 3.399444888215778e-05,
+      "dke": 1.299806747045405e-07,
+      "r": 9.262305036184172e-07,
+      "steps": 76
+     },
+     "closing_edge": {
+      "ep": -3.402145422553245e-06,
+      "phi": 1.4866830654813653e-07,
+      "wb": 9.617649545622825e-07,
+      "dke": -2.8214817260014607e-06,
+      "r": 2.324329514623613e-07,
+      "steps": 4
+     },
+     "off": {
+      "ep": 6.610567015086518e-07,
+      "phi": 2.5163018117138754e-06,
+      "wb": 2.5611485039879714e-06,
+      "dke": -1.3657159758104476e-07,
+      "r": 8.424749913637925e-07,
+      "steps": 76
+     }
+    },
+    "periods": 450.0,
+    "valve_edge_steps": 4,
+    "r_per_period": 2.1659222719618227e-06,
+    "on_r_over_phi": 0.3181259193287979,
+    "off_r_over_phi": 0.33480681349189007,
+    "plateau_r_over_phi": 0.3258590676983858,
+    "edges_r": 3.9721677697961315e-07,
+    "edges_phi": 3.0117006395791253e-07,
+    "edges_plateau_like": 9.81389962599886e-08,
+    "edges_less_plateau_like": 2.990777807196246e-07,
+    "edge_model_per_period": 4.0310064703751336e-07,
+    "edges_vs_model_rel": -0.25805680810085185,
+    "edges_share_of_r": 0.18339382817271044
+   },
+   "r_per_period": 2.1659222719618088e-06,
+   "split_note": "",
+   "E_port": -0.013759199441871062,
+   "W_b": 0.01731618054319931,
+   "W_b_port_estimate": 0.017816718618292173,
+   "Phi": 0.002578047089475395,
+   "dKE": 4.268989470037264e-06,
+   "KE_exchanged": 0.0029023246586700963,
+   "valve_edge_steps": 4,
+   "E_edge_model": 0.00018139529116688102,
+   "closure_less_edge_model": 0.000793269731215933,
+   "closure_less_edge_model_rel_phi": 0.30770180050409973,
+   "E_forced_measured": 0.003556981101328247,
+   "closure_residual": 0.0009746650223828139,
+   "closure_rel": 0.056286374466429326,
+   "phi_face": null,
+   "negative_E_port": true,
+   "note": "E_port is the D-P validation column; the primary energy basis is E_diss, the dissipative work of the isothermal impedance model (D-P.1, D-P.3: scripts/post/pump_energy.py primary). A negative E_port is chimney-driven flow, never a pump saving"
+  },
+  "hydraulic_pre": {
+   "window": [
+    2.0,
+    30.0
+   ],
+   "stage": "pre",
+   "waveform": "square",
+   "period_s": 2.0,
+   "developed": true,
+   "window_note": "14 whole periods",
+   "gated": false,
+   "gate_note": "reported, not gated: square wave (the valve edges' temporal dissipation, ~KE_exchanged / n_edge^2, dominates the residual; D-P.7 (5) splits it by valve segment)",
+   "sine_checks": null,
+   "square_split": {
+    "segments": {
+     "opening_edge": {
+      "ep": 2.9729265484576838e-06,
+      "phi": 2.2032849328970902e-08,
+      "wb": -4.7088306198010004e-11,
+      "dke": 2.788489497615271e-06,
+      "r": 1.6235711320724378e-07,
+      "steps": 4
+     },
+     "on": {
+      "ep": 8.915265759345002e-07,
+      "phi": 5.102495718230944e-07,
+      "wb": -1.677167889986911e-09,
+      "dke": 2.6080876015083663e-07,
+      "r": 1.1879107607058226e-07,
+      "steps": 76
+     },
+     "closing_edge": {
+      "ep": -2.5916136956156597e-06,
+      "phi": 2.2245472861742363e-08,
+      "wb": -5.934625891507587e-11,
+      "dke": -2.8106513589159433e-06,
+      "r": 1.9673284417962597e-07,
+      "steps": 4
+     },
+     "off": {
+      "ep": 3.8757838475712143e-10,
+      "phi": 1.4695788172992284e-07,
+      "wb": -1.9082141426974018e-10,
+      "dke": -2.261492823808261e-07,
+      "r": 7.938815762139065e-08,
+      "steps": 76
+     }
+    },
+    "periods": 14.0,
+    "valve_edge_steps": 4,
+    "r_per_period": 5.572691910788427e-07,
+    "on_r_over_phi": 0.23280975160086487,
+    "off_r_over_phi": 0.5402102744464506,
+    "plateau_r_over_phi": 0.30154745297024493,
+    "edges_r": 3.590899573868698e-07,
+    "edges_phi": 4.4278322190713264e-08,
+    "edges_plateau_like": 1.335201527840546e-08,
+    "edges_less_plateau_like": 3.4573794210846434e-07,
+    "edge_model_per_period": 3.803811811914299e-07,
+    "edges_vs_model_rel": -0.0910750604813203,
+    "edges_share_of_r": 0.6443743223839296
+   },
+   "r_per_period": 5.572691910788402e-07,
+   "split_note": "",
+   "E_port": 1.7825178100257916e-05,
+   "W_b": -2.7641934171176318e-08,
+   "W_b_port_estimate": -4.983746706891455e-08,
+   "Phi": 9.820800860412228e-06,
+   "dKE": 1.7496663057074752e-07,
+   "KE_exchanged": 8.52053845868803e-05,
+   "valve_edge_steps": 4,
+   "E_edge_model": 5.3253365366800184e-06,
+   "closure_less_edge_model": 2.4764321384237444e-06,
+   "closure_less_edge_model_rel_phi": 0.2521619340033941,
+   "E_forced_measured": 1.779753616608674e-05,
+   "closure_residual": 7.801768675103763e-06,
+   "closure_rel": 0.7944126742812585,
+   "phi_face": null,
+   "negative_E_port": false,
+   "note": ""
+  },
+  "T_surface_max_K": 306.6990587767952,
+  "T_module_mean_end_K": 305.4993479851011,
+  "dT_cell_end_K": 0.11269482503843165,
+  "outlet_backflow_fraction": 0.3803316116968878,
+  "outlet": {
+   "backflow": {
+    "0-30": 0.08305622716398417,
+    "30-100": 0.21029322065387326,
+    "100-930": 0.3885603413999461,
+    "30-930": 0.3829663228866522
+   },
+   "bursts": [
+    {
+     "t0": 392.375,
+     "t1": 400.0,
+     "u_max_mm_s": 67.66786791371963,
+     "t_umax": 393.275,
+     "location_mm": [
+      85.62,
+      4.38,
+      234.29
+     ],
+     "ke_max": 1.6726548424630018e-05,
+     "ke_ratio": 3.254541988484023
+    },
+    {
+     "t0": 401.025,
+     "t1": 401.7,
+     "u_max_mm_s": 61.682422305479115,
+     "t_umax": 401.025,
+     "location_mm": [
+      85.62,
+      5.62,
+      234.29
+     ],
+     "ke_max": 1.3791677765807081e-05,
+     "ke_ratio": 2.6834941220967115
+    },
+    {
+     "t0": 409.1,
+     "t1": 411.975,
+     "u_max_mm_s": 68.62162767531046,
+     "t_umax": 409.875,
+     "location_mm": [
+      84.38,
+      4.38,
+      234.29
+     ],
+     "ke_max": 1.8438798036061125e-05,
+     "ke_ratio": 3.587700277552334
+    },
+    {
+     "t0": 417.875,
+     "t1": 421.4,
+     "u_max_mm_s": 76.42040801222083,
+     "t_umax": 419.025,
+     "location_mm": [
+      84.38,
+      -5.63,
+      234.29
+     ],
+     "ke_max": 1.5348538687586643e-05,
+     "ke_ratio": 2.986417900005399
+    },
+    {
+     "t0": 579.525,
+     "t1": 579.975,
+     "u_max_mm_s": 60.5610281794701,
+     "t_umax": 579.85,
+     "location_mm": [
+      84.38,
+      -6.87,
+      234.29
+     ],
+     "ke_max": 1.2937537003688817e-05,
+     "ke_ratio": 2.5173010197411596
+    },
+    {
+     "t0": 655.0,
+     "t1": 657.775,
+     "u_max_mm_s": 65.38177691585796,
+     "t_umax": 655.65,
+     "location_mm": [
+      84.38,
+      -6.87,
+      234.29
+     ],
+     "ke_max": 1.1443269491963647e-05,
+     "ke_ratio": 2.2265562566568606
+    },
+    {
+     "t0": 671.025,
+     "t1": 671.975,
+     "u_max_mm_s": 61.51128142891685,
+     "t_umax": 671.25,
+     "location_mm": [
+      86.88,
+      -3.12,
+      234.29
+     ],
+     "ke_max": 8.42487903299936e-06,
+     "ke_ratio": 1.639257655836523
+    },
+    {
+     "t0": 757.025,
+     "t1": 762.0,
+     "u_max_mm_s": 71.60253159536752,
+     "t_umax": 761.025,
+     "location_mm": [
+      83.12,
+      19.42,
+      234.29
+     ],
+     "ke_max": 8.383459935075859e-06,
+     "ke_ratio": 1.6311985996645593
+    },
+    {
+     "t0": 810.825,
+     "t1": 820.0,
+     "u_max_mm_s": 102.78124670246626,
+     "t_umax": 813.975,
+     "location_mm": [
+      85.62,
+      -13.21,
+      234.29
+     ],
+     "ke_max": 2.5903486225149674e-05,
+     "ke_ratio": 5.040130302300062
+    },
+    {
+     "t0": 821.025,
+     "t1": 821.625,
+     "u_max_mm_s": 61.78108586078471,
+     "t_umax": 821.025,
+     "location_mm": [
+      85.63,
+      -10.69,
+      234.29
+     ],
+     "ke_max": 1.0425782653296455e-05,
+     "ke_ratio": 2.028580347036673
+    }
+   ],
+   "burst_u_mm_s": 60.0,
+   "burst_z_mm": 200.0,
+   "ke_ref_median": 5.139447726843218e-06,
+   "ke_ref_window": [
+    300.0,
+    930.0
+   ]
+  },
+  "precirc": {
+   "applicable": true,
+   "gated": false,
+   "case": "h_aisee_sq0.5D0.5_Q64.2_medium_dt12.5",
+   "t_pre": 30.0,
+   "window_s": 10.0,
+   "metric_dp": "amp",
+   "windows_dp": [
+    [
+     10.0,
+     155.44472372072875
+    ],
+    [
+     20.0,
+     155.4264736659129
+    ],
+    [
+     30.0,
+     155.4265178101747
+    ]
+   ],
+   "windows_ke": [
+    [
+     10.0,
+     1.2551591026872418e-06
+    ],
+    [
+     20.0,
+     1.6145343357335342e-06
+    ],
+    [
+     30.0,
+     1.6537782175033758e-06
+    ]
+   ],
+   "last_changes_dp": [
+    0.00011740543119768584,
+    2.840201427684959e-07
+   ],
+   "last_changes_ke": [
+    0.22258754434170447,
+    0.023729833513641305
+   ],
+   "rel_tol": 0.01,
+   "stationary": false,
+   "notes": [
+    "only 3 complete 10 s window(s) in the 30 s pre-run; NEW-14 needs 4",
+    "NOT stationary: re-run the pre-circulation once at t_pre = 60 s (NEW-14.1); a second failure is a hard failure, reported"
+   ]
+  }
+ }
+}

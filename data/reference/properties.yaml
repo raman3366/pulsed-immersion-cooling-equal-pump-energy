@@ -1,0 +1,73 @@
+# Material properties — single source of truth (PROJECT.md §3.3).
+# OpenFOAM dictionaries are GENERATED from this file; never hand-type these
+# values into a case. All values verified against the Liu et al. accepted
+# manuscript and manufacturer-lineage data on 2026-08-27
+# (docs/literature/anchors.md A1–A2).
+
+cell:
+  name: Samsung ICR18650-22P (2.2 Ah, NMC111)
+  source: liu2023immersion, Table 1
+  density: 2523.0            # kg/m^3
+  specific_heat: 1145.0      # J/(kg.K)
+  conductivity_radial: 1.2   # W/(m.K)
+  conductivity_axial: 34.4   # W/(m.K)  — 28.7x anisotropy; interfaces MUST
+                             #   use kappaMethod directionalSolidThermo
+  diameter: 0.018            # m (18650 nominal)
+  height: 0.065              # m (18650 nominal)
+  mass: 0.0415               # kg (Liu Table 1: 41.5 +/- 0.5 g)
+  volume_liu: 1.653e-5       # m^3 (Liu Table 1: 16.53 mL; our meshed
+                             #   cylinder: 16.51 mL, -0.15%)
+  # Nickel tabs (Liu Table 1): rho 8908, k 90, cp 502, 0.5 mm x 7 mm.
+  # NEGLECTED in our model — state and justify in the paper.
+
+coolant:
+  name: 3M Novec-7200 (HFE-7200)
+  source: liu2023immersion Table 2 + manufacturer-lineage (anchors.md A2)
+  density: 1430.0            # kg/m^3 @ 25 C
+  dynamic_viscosity: 6.1e-4  # Pa.s — Liu Table 2, consistent with the 3M
+                             #   2009 PI sheet ("0.61 cps", dynamic).
+                             #   CAUTION: one replica sheet prints 0.61 cSt
+                             #   (kinematic -> mu ~ 8.7e-4); +/-40% moves Re
+                             #   and Wo — sensitivity note in the paper.
+  specific_heat: 1220.0      # J/(kg.K)
+  thermal_conductivity: 0.068  # W/(m.K) — BASELINE (D-07, decided 2026-08-27):
+                               #   physical/manufacturer value.
+  thermal_conductivity_sensitivity: 0.6  # Liu et al.'s CFD "adjusted by
+                                         #   experiments" effective value —
+                                         #   validation runs BOTH (D-07).
+  boiling_point: 349.15      # K (76 C) — single-phase margin check
+  # Thermal expansion (for buoyancy): derive beta from rho(T) polynomial when
+  # the manufacturer rho(T) data is digitised in the validation phase.
+  # TODO(validation): rho(T), mu(T), cp(T), k(T) polynomial fits for the
+  # hPolynomial/icoPolynomial thermo — constants above are the 25 C anchors.
+
+validation_rig:            # Liu et al. — for the static validation case
+  source: liu2023immersion Sec. 2.1 (anchors.md A1)
+  box_inner: [0.120, 0.080, 0.100]   # m — acrylic box, 5 mm wall
+  wall_thickness: 0.005              # m
+  outer_boundary: fixedValue         # D-09: isothermal bath, NOT adiabatic
+  bath_temperature: 295.15           # K (22 C, +/-2 C sensitivity)
+  initial_temperature: 298.15        # K — Liu §3.3: cells AND liquid start
+                                     #   at 25 C (not at bath temperature)
+  discharge: CC to 2.75 V cut-off
+  currents_A_module: {1C: 13.2, 2C: 26.4, 3C: 39.6}   # Liu §2.2
+  # Liu ignores the acrylic wall resistance in their model (§3.3) —
+  # direct support for D-09's fixed-T-at-fluid-boundary choice.
+  # -- Stage-3 extraction (2026-08-28): --
+  module_placement: cells stand on the box floor (0.5 mm tabs neglected),
+    centred in x-y   # Figs 2c/4b/14a + Table-4 boxes (all clearance on top)
+  cell_bottom_bc: externalWallHeatFluxTemperature   # h = k_acrylic/t through
+  acrylic_conductivity: 0.19       # W/m.K (typical PMMA; not from Liu)
+  acrylic_h_bottom: 38.0           # = 0.19 / 0.005 W/m2.K (acrylic alone)
+  bath_film_h: 100.0               # W/m2.K bath-side natural-convection film
+                                   #   (engineering estimate, sensitivity item)
+  wall_U_effective: 27.0           # series: 1/(1/38 + 1/100) — used on ALL
+                                   #   bath-facing boundaries (diagnostic 4)
+  t_discharge_3C: 900.0            # s, from Figs 4a/7b/9
+  validation_metric: T2 = mid-height SURFACE temperature of a middle cell
+    (Liu Fig 9; thermocouple at half height; avg error 2.9 %)
+  liquid_volume_baseline_mL: 861   # 960 box - 99 module; delta = 8.7
+  targets_3C:
+    T_max_C: 37.0
+    dT_C: 1.8
+    model_error_pct: 2.9

@@ -1,0 +1,7 @@
+# output of scripts/reproduce.sh (extracted cases and regenerated results)
+work/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store

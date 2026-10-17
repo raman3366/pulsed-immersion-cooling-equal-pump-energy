@@ -1,0 +1,8 @@
+# Versions this package was tested with: Python 3.12.3 on Ubuntu 24.04 LTS
+# (the system packages python3-numpy, python3-pandas, python3-matplotlib,
+# python3-scipy and python3-yaml). The scorer uses numpy.trapz (NumPy 1.x).
+numpy==1.26.4
+pandas==2.1.4
+matplotlib==3.6.3
+scipy==1.11.4
+PyYAML==6.0.1
