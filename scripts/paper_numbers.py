@@ -20,12 +20,18 @@ scripts/post/aisee_results.py. Prints:
 3. matched pumping energy: each pulsed case against the steady curve
    interpolated linearly in log E_pump (peak temperature, end spread, and the
    equivalent steady flow by log-log interpolation of Qbar against E_pump);
-4. the mechanism comparison at 90 mL/min (pulsed minus steady);
+4. the mechanism comparison at 90 mL/min (pulsed minus steady), the intervals
+   in which each pulsed case (and C1 at dt/2) is less uniform than steady flow
+   (1 s grid after heat-on; largest excess) and the row means at the end
+   (rows are the cell pairs (0,3), (1,4), (2,5), upstream first);
 5. numerical checks (Table II): the C1 time-step pair at t = 330 s (aisee_results.at_time),
    the 360 mL/min time-step and limited-gradient pairs, and the three meshes at
    t = 300 s with the grid convergence index of the spread (Celik et al.,
    J. Fluids Eng. 130 (2008) 078001, as implemented in scripts/post/gci2.py;
-   cell size (1/N)^(1/3) from the cell counts in each case's k0_mesh.json);
+   cell size (1/N)^(1/3) from the cell counts in each case's k0_mesh.json; the
+   GCI of the spread on the fine and the medium mesh, and the observed order of
+   T_max); and the largest change of the C1 spread at dt/2 over 100-250 s after
+   heat-on (1 s grid);
 6. the equal-energy histories (Fig. 4): each pulsed case against the steady
    histories interpolated linearly in log E_pump between the two bracketing
    steady flows at each time (aisee_figures.equal_energy_steady): the largest
@@ -113,6 +119,36 @@ def main(argv=None):
               f"dT_cell,end {100 * (f(k, 'dTcell_end_K') / f('steady_Q90', 'dTcell_end_K') - 1):+.1f} %, "
               f"time-mean dT_cell {100 * (f(k, 'dTcell_mean_K') / f('steady_Q90', 'dTcell_mean_K') - 1):+.1f} %, "
               f"E_pump x{f(k, 'E_pump_mJ') / e90:.2f}")
+    grid = np.arange(0.0, 900.0 + 0.5, 1.0)          # s after heat-on
+
+    def on_grid(k):
+        t, smax, dtc, _ = AR.series(cs[k]["path"])
+        return np.interp(grid + 30.0, t, dtc)
+
+    def spans(excess):
+        out, i = [], 0
+        while i < excess.size:
+            if excess[i] > 1e-6:                     # above 1 uK (round-off at heat-on)
+                j = i
+                while j + 1 < excess.size and excess[j + 1] > 1e-6:
+                    j += 1
+                out.append(f"{grid[i]:.0f}-{grid[j]:.0f} s ({1e3 * excess[i:j + 1].max():+.2f} mK)")
+                i = j + 1
+            else:
+                i += 1
+        return ", ".join(out) or "never"
+
+    d90 = on_grid("steady_Q90")
+    for k in ("C1_Q90", "C3_Q90", "C1_Q90_dt6.25_h300"):
+        d = on_grid(k)
+        n = int(np.searchsorted(grid, 300.0, "right")) if k.endswith("h300") else grid.size
+        print(f"{k} less uniform than steady 90: {spans((d - d90)[:n])}")
+    for k in ("steady_Q90", "C1_Q90", "C3_Q90"):
+        t, _, _, _ = AR.series(cs[k]["path"])
+        tav = [AR.HIO.column(cs[k]["path"], f"cell{i}", f"TvolAverage_cell{i}")[1][-1] for i in range(6)]
+        rows3 = [(tav[i] + tav[i + 3]) / 2 for i in range(3)]
+        print(f"{k} end row means above the upstream row: middle {1e3 * (rows3[1] - rows3[0]):.1f} mK, "
+              f"downstream {1e3 * (rows3[2] - rows3[0]):.1f} mK")
 
     print("\n== 5. numerical checks")
     a = AR.at_time(cs["C1_Q90"]["path"], 330.0)
@@ -138,7 +174,27 @@ def main(argv=None):
                        rise=d[2])
     print(f"  r21 {g.r21:.3f}, r32 {g.r32:.3f}; dT_cell ({g.convergence}): observed order "
           f"{g.p_observed:.2f}, extrapolated {g.phi_ext:.1f} mK, GCI_fine "
-          f"{100 * g.U_fine / d[2]:.1f} % (Fs {g.fs:g})")
+          f"{100 * g.U_fine / d[2]:.1f} %, GCI_medium {100 * g.U_medium / d[1]:.1f} % (Fs {g.fs:g})")
+    tm = [v["Tmax_C"] for v in vals]
+    gt = gci2.celik_gci([tm[2], tm[1], tm[0]], [gci2.cell_size(x) for x in (n[2], n[1], n[0])],
+                        rise=tm[2] - (T_IN - 273.15))
+    # Celik's fixed-point order on T_max regardless of the class gci2 assigns
+    # (e21 and e32 nearly equal: no asymptotic range, so no extrapolation)
+    e21, e32 = tm[1] - tm[2], tm[0] - tm[1]
+    sgn = np.sign(e32 / e21)
+    pp = 1.0
+    for _ in range(200):
+        q = np.log((gt.r21 ** pp - sgn) / (gt.r32 ** pp - sgn))
+        pp = abs(np.log(abs(e32 / e21)) + q) / np.log(gt.r21)
+    print(f"  T_max: changes per level {1e3 * e32:.1f} / {1e3 * e21:.1f} mK (gci2: {gt.convergence}); "
+          f"Celik fixed-point order {pp:.2f}: no asymptotic range")
+    g1 = on_grid("C1_Q90")
+    g2 = on_grid("C1_Q90_dt6.25_h300")
+    w = (grid >= 100.0) & (grid <= 250.0)
+    dd = g2[w] - g1[w]
+    i = int(np.argmax(np.abs(dd)))
+    print(f"  C1 90 spread at dt/2 over 100-250 s: largest change {1e3 * dd[i]:+.1f} mK "
+          f"({100 * dd[i] / g1[w][i]:+.1f} %) at {grid[w][i]:.0f} s")
     print(f"  T_max change per level: {1e3 * (vals[1]['Tmax_C'] - vals[0]['Tmax_C']):+.1f}, "
           f"{1e3 * (vals[2]['Tmax_C'] - vals[1]['Tmax_C']):+.1f} mK; E_pump "
           + " / ".join(f"{f(k, 'E_pump_mJ'):.4f}" for k in keys) + " mJ")

@@ -12,7 +12,8 @@
 # 3. writes the derived time series to WORK_DIR/results/timeseries/;
 # 4. prints the derived numbers of the paper (scripts/paper_numbers.py, also
 #    saved to WORK_DIR/results/paper_numbers.txt);
-# 5. compares the table, gate records, time series and figures with data/
+# 5. compares the table, gate records and time series with data/ and checks that
+#    the five figures exist
 #    (scripts/check_reproduction.py) and exits non-zero on any difference.
 #
 # Six cases fail one or two gates and are flagged in the table (column

@@ -283,10 +283,11 @@ def fig_histories(rows, paths, path):
         axs[1].plot(t[m] - t_pre, 1e3 * dtc[m], **style)
     # change from steady Q90 at the same time (caption); "delta" is the results table's equal-energy symbol
     # top label split so only "(K)" sits beside the axis, clear of the bottom label
-    axs[0].set_ylabel(r"$T_{\max}$ change" + "\n(K)", linespacing=1.0)
+    axs[0].set_ylabel(r"$T_{\max}$ difference" + "\n(K)", linespacing=1.0)
     axs[1].set_ylabel(r"$\Delta T_{\mathrm{cell}}$ (mK)")
     axs[1].set_xlabel("Time since heat-on (s)")
     axs[1].set_xlim(0, 900)
+    axs[1].set_xticks(range(0, 901, 150))      # as fig_matched
     h, lbl = axs[0].get_legend_handles_labels()
     # one legend row above the panels, clear of the curves
     fig.legend(h, lbl, frameon=False, loc="upper center", ncol=3, fontsize=8,

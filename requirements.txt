@@ -1,6 +1,8 @@
 # Versions this package was tested with: Python 3.12.3 on Ubuntu 24.04 LTS
 # (the system packages python3-numpy, python3-pandas, python3-matplotlib,
 # python3-scipy and python3-yaml). The scorer uses numpy.trapz (NumPy 1.x).
+# matplotlib 3.6.3 has no pip wheel for Python 3.12: with pip, use Python 3.10
+# or 3.11, or the Ubuntu system packages on 3.12 (see README, Software environment).
 numpy==1.26.4
 pandas==2.1.4
 matplotlib==3.6.3
