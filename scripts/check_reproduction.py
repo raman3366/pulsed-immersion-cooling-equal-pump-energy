@@ -19,7 +19,7 @@ package's data/ (default). Checks, all hard (exit 1 on any failure):
 3. RESULTS_DIR/timeseries/<key>.csv.gz (scripts/make_timeseries.py --out)
    against DATA_DIR/timeseries/<key>.csv.gz: identical decompressed bytes.
 4. The three figures of the paper exist and are non-empty PDF files:
-   RESULTS_DIR/figures/fig_waveforms.pdf, fig_pareto.pdf, fig_histories.pdf.
+   RESULTS_DIR/figures/fig_geometry.pdf, fig_pareto.pdf, fig_histories.pdf.
 """
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-FIGS = ("fig_waveforms.pdf", "fig_pareto.pdf", "fig_histories.pdf")
+FIGS = ("fig_geometry.pdf", "fig_pareto.pdf", "fig_histories.pdf")
 
 
 def _finite(o):

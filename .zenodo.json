@@ -5,20 +5,20 @@
   "creators": [
     {
       "name": "Lakshmipathi, Anantha Raman",
-      "affiliation": "Rajalakshmi Institute of Technology",
+      "affiliation": "Rajalakshmi Institute of Technology, Chennai, India",
       "orcid": "0000-0003-3465-286X"
     },
     {
-      "name": "Balakrishnan, Deepanraj",
-      "affiliation": "Prince Mohammad Bin Fahd University"
+      "name": "AlZohbi, Gaydaa",
+      "affiliation": "Prince Mohammad Bin Fahd University, Al-Khobar, Saudi Arabia"
     },
     {
-      "name": "AUTHOR 3 TO BE ADDED (Family name, Given names)",
-      "affiliation": "AFFILIATION TO BE ADDED"
+      "name": "Ratna Sunil, B.",
+      "affiliation": "Prince Mohammad Bin Fahd University, Al-Khobar, Saudi Arabia"
     },
     {
-      "name": "AUTHOR 4 TO BE ADDED (Family name, Given names)",
-      "affiliation": "AFFILIATION TO BE ADDED"
+      "name": "Deepanraj, B.",
+      "affiliation": "Prince Mohammad Bin Fahd University, Al-Khobar, Saudi Arabia"
     }
   ],
   "license": "cc-by-4.0",
@@ -34,5 +34,7 @@
     "18650",
     "HFE-7200",
     "OpenFOAM"
-  ]
+  ],
+  "language": "eng",
+  "notes": "Corresponding author: Anantha Raman Lakshmipathi (raman3366@gmail.com). Data and code for the paper of the same title submitted to the 2027 International Conference on Artificial Intelligence, Smart Electronic & Energy Systems (AISEE 2027, IEEE)."
 }

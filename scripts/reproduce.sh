@@ -8,7 +8,7 @@
 # 2. scores every case with scripts/post/aisee_results.py (all gates
 #    recomputed, --refresh) and writes WORK_DIR/results/aisee_results.csv, the
 #    gate records WORK_DIR/results/aisee_cache/<case>.json and the figures
-#    WORK_DIR/results/figures/fig_{waveforms,pareto,histories}.pdf;
+#    WORK_DIR/results/figures/fig_{geometry,pareto,histories}.pdf;
 # 3. writes the derived time series to WORK_DIR/results/timeseries/;
 # 4. prints the derived numbers of the paper (scripts/paper_numbers.py, also
 #    saved to WORK_DIR/results/paper_numbers.txt);

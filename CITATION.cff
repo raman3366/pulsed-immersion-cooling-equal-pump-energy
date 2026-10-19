@@ -2,25 +2,27 @@ cff-version: 1.2.0
 message: "If you use this data or code, please cite it as below."
 type: dataset
 title: "Conjugate CFD Study of Pulsed Dielectric-Fluid Flow for Thermal Management of an 18650 Battery Module at Equal Pump Energy: data and code"
-# Authors 3 and 4 to be supplied (placeholders below).
 authors:
   - family-names: "Lakshmipathi"
     given-names: "Anantha Raman"
-    affiliation: "Department of Mechanical Engineering, Rajalakshmi Institute of Technology, Chennai, India"
+    affiliation: "Department of Mechanical Engineering, Rajalakshmi Institute of Technology, Chennai 600124, India"
     orcid: "https://orcid.org/0000-0003-3465-286X"
     email: "raman3366@gmail.com"
-  - family-names: "Balakrishnan"
-    given-names: "Deepanraj"
+  - family-names: "AlZohbi"
+    given-names: "Gaydaa"
     affiliation: "Department of Mechanical Engineering, Prince Mohammad Bin Fahd University, Al-Khobar, Saudi Arabia"
-  - family-names: "AUTHOR 3 FAMILY NAME TO BE ADDED"
-    given-names: "AUTHOR 3 GIVEN NAMES TO BE ADDED"
-    affiliation: "AFFILIATION TO BE ADDED"
-  - family-names: "AUTHOR 4 FAMILY NAME TO BE ADDED"
-    given-names: "AUTHOR 4 GIVEN NAMES TO BE ADDED"
-    affiliation: "AFFILIATION TO BE ADDED"
+    email: "galzohbi@pmu.edu.sa"
+  - family-names: "Ratna Sunil"
+    given-names: "B."
+    affiliation: "Department of Mechanical Engineering, Prince Mohammad Bin Fahd University, Al-Khobar, Saudi Arabia"
+    email: "rburadagunta@pmu.edu.sa"
+  - family-names: "Deepanraj"
+    given-names: "B."
+    affiliation: "Department of Mechanical Engineering, Prince Mohammad Bin Fahd University, Al-Khobar, Saudi Arabia"
+    email: "deepanrajb@ieee.org"
 version: "1.0.0"
-# doi: to be added after the Zenodo deposit
-# date-released: to be added at release (YYYY-MM-DD)
+# doi and date-released: added after the Zenodo deposit (the GitHub release mints the DOI)
+repository-code: "https://github.com/raman3366/aisee2027-pulsed-immersion-cooling"
 license:
   - MIT
   - CC-BY-4.0
