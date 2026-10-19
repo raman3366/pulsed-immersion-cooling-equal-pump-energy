@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""AISEE 2027 conference study (D-AIS.1): results table and figures.
+"""Results table and figures of the conference study (decision D-AIS.1).
 
 Scores every case of the study with the registered housing scorer
 (housing_metrics.evaluate: the rule-4 hard gates), then derives the
-conference quantities:
+the paper's quantities:
 
 - T_max,peak: the largest solid temperature of the six cells over the run
   (max over time of max_i Tmax_cell_i), and its rise over the inlet;

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Derived numbers of the paper from a reproduction: the ratios of Table I,
-the numerical checks of Table II and the comparisons of Section III.
+"""Derived numbers of the paper from a reproduction: the pumping-energy
+ratios, the numerical checks, the matched-energy and mechanism comparisons and
+the equal-energy histories (the paper's Tables I-III and Figs. 3-5).
 
     python3 scripts/paper_numbers.py [RESULTS_DIR]
 
@@ -13,18 +14,25 @@ scripts/post/aisee_results.py. Prints:
    error, Courant maxima by region (claim-region bulk, thin layer, outflow
    column; reported, not gated), liquid minimum below the inlet temperature,
    isothermal port-work budget residual;
-2. Table I ratios: r_QS (viscous-limit pumping energy relative to steady
+2. energy ratios (Tables I and III): r_QS (viscous-limit pumping energy relative to steady
    90 mL/min, (<Q^2>/Qbar^2)(Qbar/90)^2) and r (measured E_pump relative to
    steady 90 mL/min);
 3. matched pumping energy: each pulsed case against the steady curve
    interpolated linearly in log E_pump (peak temperature, end spread, and the
    equivalent steady flow by log-log interpolation of Qbar against E_pump);
 4. the mechanism comparison at 90 mL/min (pulsed minus steady);
-5. Table II checks: the C1 time-step pair at t = 330 s (aisee_results.at_time),
+5. numerical checks (Table II): the C1 time-step pair at t = 330 s (aisee_results.at_time),
    the 360 mL/min time-step and limited-gradient pairs, and the three meshes at
    t = 300 s with the grid convergence index of the spread (Celik et al.,
    J. Fluids Eng. 130 (2008) 078001, as implemented in scripts/post/gci2.py;
-   cell size (1/N)^(1/3) from the cell counts in each case's k0_mesh.json).
+   cell size (1/N)^(1/3) from the cell counts in each case's k0_mesh.json);
+6. the equal-energy histories (Fig. 4): each pulsed case against the steady
+   histories interpolated linearly in log E_pump between the two bracketing
+   steady flows at each time (aisee_figures.equal_energy_steady): the largest
+   T_max difference over the first 200 s after heat-on, its value at the end
+   and whether it grows monotonically after 200 s (10 s grid); the range of the
+   relative change of the spread from 60 s; and the intervals in which the
+   pulsed case is less uniform, with the largest excess.
 """
 from __future__ import annotations
 
@@ -43,8 +51,8 @@ import gci2                     # noqa: E402
 
 T_IN = 298.15
 TAU_V = 0.05                     # valve edge (s)
-QS = {"steady": lambda: 1.0,     # <Q^2>/Qbar^2, paper Eq. (1)
-      "C3": lambda: 1 + 0.6 ** 2 / 2,
+QS = {"steady": lambda: 1.0,     # <Q^2>/Qbar^2, paper Eq. (1), "Flow Schedules and Cases"
+      "C3": lambda: 1 + 0.6 ** 2 / 2,          # sine, A 0.6
       "C1": lambda: 1 / 0.25 - TAU_V * 1.0 / (3 * 0.25 ** 2),
       "C2p": lambda: 1 / 0.5 - TAU_V * 0.5 / (3 * 0.5 ** 2)}
 
@@ -74,7 +82,7 @@ def main(argv=None):
               f"{float(mp.group(1)) - T_IN if mp else float('nan'):+.3f} K  budget "
               f"{cl.group(1) + ' %' if cl else '-'}")
 
-    print("\n== 2. Table I ratios (r_QS: viscous-limit estimate; r: measured)")
+    print("\n== 2. energy ratios (r_QS: viscous-limit estimate; r: measured)")
     e90 = f("steady_Q90", "E_pump_mJ")
     for k, r in rows.items():
         if r["role"] not in ("curve", "mean-flow", "matched-energy"):
@@ -106,7 +114,7 @@ def main(argv=None):
               f"time-mean dT_cell {100 * (f(k, 'dTcell_mean_K') / f('steady_Q90', 'dTcell_mean_K') - 1):+.1f} %, "
               f"E_pump x{f(k, 'E_pump_mJ') / e90:.2f}")
 
-    print("\n== 5. Table II checks")
+    print("\n== 5. numerical checks")
     a = AR.at_time(cs["C1_Q90"]["path"], 330.0)
     b = AR.at_time(cs["C1_Q90_dt6.25_h300"]["path"], 330.0)
     print(f"C1 90, dt 12.5 -> 6.25 ms at t = {b['t']:g} s: T_max {a['Tmax_C']:.4f} -> {b['Tmax_C']:.4f} C "
@@ -134,6 +142,39 @@ def main(argv=None):
     print(f"  T_max change per level: {1e3 * (vals[1]['Tmax_C'] - vals[0]['Tmax_C']):+.1f}, "
           f"{1e3 * (vals[2]['Tmax_C'] - vals[1]['Tmax_C']):+.1f} mK; E_pump "
           + " / ".join(f"{f(k, 'E_pump_mJ'):.4f}" for k in keys) + " mJ")
+
+    print("\n== 6. equal-energy histories (t: time after heat-on)")
+    import aisee_figures as AF
+    frows = [dict(r, E_pump_mJ=float(r["E_pump_mJ"])) for r in rows.values()]
+    cache = {}
+
+    def series_of(k):
+        if k not in cache:
+            t, smax, dtc, _ = AR.series(cs[k]["path"])
+            cache[k] = (t, smax, dtc)
+        return cache[k]
+
+    for k in ("C1_Q46.6", "C2p_Q64.2", "C3_Q82.9", "C1_Q90", "C3_Q90"):
+        t, smax, dtc = series_of(k)
+        te, ae, be, (lo, hi, w) = AF.equal_energy_steady(frows, series_of, f(k, "E_pump_mJ"))
+        h = t > 30.0
+        th = t[h] - 30.0
+        dT = smax[h] - np.interp(t[h], te, ae)
+        rel = 100 * (dtc[h] / np.interp(t[h], te, be) - 1)
+        grid = np.arange(200.0, 901.0, 10.0)
+        mono = bool(np.all(np.diff(np.interp(grid, th, dT)) > 0))
+        m60 = th >= 60.0
+        less = rel[m60] > 0
+        edges = np.flatnonzero(np.diff(less.astype(int)))
+        spans = []
+        for i0, i1 in zip(np.r_[0, edges + 1], np.r_[edges + 1, less.size]):
+            if less[i0]:
+                seg = rel[m60][i0:i1]
+                spans.append(f"{th[m60][i0]:.0f}-{th[m60][i1 - 1]:.0f} s (max {seg.max():+.1f} %)")
+        print(f"{k:10s} steady {lo}/{hi} w {w:.3f}: T_max diff |max| over 0-200 s "
+              f"{np.abs(dT[th <= 200]).max():.4f} K, at 900 s {dT[-1]:+.2f} K, increasing after "
+              f"200 s: {mono}; spread change from 60 s {rel[m60].min():+.1f} to "
+              f"{rel[m60].max():+.1f} %; less uniform: {', '.join(spans) or 'never'}")
     return 0
 
 

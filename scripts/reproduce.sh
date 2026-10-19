@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Reproduce Table I, the per-case numerical checks (the scorer's gates) and
-# Figs. 1-3 of the paper from the case archives in data/cases/.
+# Reproduce the paper's results table, the per-case numerical checks (the
+# scorer's gates) and the paper's figures from the case archives in data/cases/.
 #
 #   bash scripts/reproduce.sh [WORK_DIR]        (default: work/ in this repository)
 #
@@ -8,7 +8,7 @@
 # 2. scores every case with scripts/post/aisee_results.py (all gates
 #    recomputed, --refresh) and writes WORK_DIR/results/aisee_results.csv, the
 #    gate records WORK_DIR/results/aisee_cache/<case>.json and the figures
-#    WORK_DIR/results/figures/fig_{geometry,pareto,histories}.pdf;
+#    WORK_DIR/results/figures/fig_{geometry,waveforms,pareto,matched,histories}.pdf;
 # 3. writes the derived time series to WORK_DIR/results/timeseries/;
 # 4. prints the derived numbers of the paper (scripts/paper_numbers.py, also
 #    saved to WORK_DIR/results/paper_numbers.txt);
@@ -41,14 +41,14 @@ export AISEE_CASE_ROOT="$WORK/cases"
 export AISEE_OUT="$WORK/results"
 mkdir -p "$AISEE_OUT"
 
-echo ">>> scoring (Table I, gates, Figs. 1-3)"
+echo ">>> scoring (results table, gates, figures)"
 "$PY" "$REPO/scripts/post/aisee_results.py" --refresh --allow-fail \
     C1_Q90 steady_Q360 steady_Q360_dt6.25 steady_Q135 steady_Q360_cand2 steady_Q180
 
 echo ">>> time series"
 "$PY" "$REPO/scripts/make_timeseries.py" --out "$AISEE_OUT/timeseries"
 
-echo ">>> derived numbers of the paper (Table I ratios, Table II, Section III)"
+echo ">>> derived numbers of the paper (energy ratios, checks, comparisons)"
 "$PY" "$REPO/scripts/paper_numbers.py" "$AISEE_OUT" | tee "$AISEE_OUT/paper_numbers.txt"
 
 echo ">>> comparison with data/"

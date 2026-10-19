@@ -22,10 +22,10 @@ authors:
     email: "deepanrajb@ieee.org"
 version: "1.0.0"
 # doi and date-released: added after the Zenodo deposit (the GitHub release mints the DOI)
-repository-code: "https://github.com/raman3366/aisee2027-pulsed-immersion-cooling"
-license:
-  - MIT
-  - CC-BY-4.0
+repository-code: "https://github.com/raman3366/pulsed-immersion-cooling-equal-pump-energy"
+# CC BY 4.0 for the dataset as a whole (data and documentation); the code in
+# scripts/ and geometry/ is MIT (LICENSE). A CFF license list would mean "or".
+license: CC-BY-4.0
 keywords:
   - battery thermal management
   - immersion cooling

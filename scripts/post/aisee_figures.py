@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""AISEE 2027 conference figures (D-AIS.1), called by aisee_results.py.
+"""Figures of the paper (D-AIS.1), called by aisee_results.py.
 
 fig_geometry.pdf   side view (x-z) of the housing, inlet channel and riser,
                    with a top view (x-y) of the 2 x 3 array as an inset;
@@ -11,11 +11,17 @@ fig_pareto.pdf     T_max,pk (a) and dT_cell at the end of the discharge (b)
                    aimed at steady Q90's energy: open)
 fig_histories.pdf  T_max(t) relative to steady Q90 and dT_cell(t) over the
                    discharge, steady Q90 against the pulsed arms at Q90
+fig_waveforms.pdf  the imposed inlet flow Q(t)/Qbar of C1, C2 and C3 over 2 s (case model)
+fig_matched.pdf    every pulsed case against steady flow of equal pumping
+                   energy over the discharge (equal_energy_steady: the steady
+                   histories interpolated linearly in log E_pump, the rule of
+                   the results table's delta columns): T_max(t) difference and
+                   relative change of dT_cell(t); text at 8 pt (IEEE guidance)
 
 Okabe-Ito hues (validated, scripts in the dataviz skill; adjacent CVD pair
 in the 6-8 band), so every series also has its own marker and line style
 (grayscale print) and the values are in the paper's table. A case that
-failed a gate carries the mark Table I gives it (rule 4: flagged, never
+failed a gate carries the mark the results table gives it (rule 4: flagged, never
 plotted silently): dagger = hydraulic_closure[pre], double dagger =
 max_principle, asterisk = any other gate.
 """
@@ -41,11 +47,11 @@ LABEL = {"steady": "Steady", "C1": "C1: square 1 Hz, $D$ = 0.25",
 INK, MUTED, GRID = "#1a1a1a", "#6b6b6b", "#e3e3e3"
 NOISE_TMAX_K = 0.004      # GDT1 dt and seed pairs, volume T_max,peak (aisee_results.py)
 COL_W = 3.5               # IEEE column width, inches
-FIG1_W = 2.95             # Fig. 1 width (printed at its natural size, 7 pt labels)
+FIG1_W = 3.45             # fig_geometry width (printed at its natural size, 8 pt labels)
 
 plt.rcParams.update({
-    "font.size": 7.5, "axes.labelsize": 7.5, "legend.fontsize": 7,
-    "xtick.labelsize": 7, "ytick.labelsize": 7, "axes.edgecolor": MUTED,
+    "font.size": 8, "axes.labelsize": 8, "legend.fontsize": 8,
+    "xtick.labelsize": 8, "ytick.labelsize": 8, "axes.edgecolor": MUTED,
     "axes.labelcolor": INK, "xtick.color": INK, "ytick.color": INK,
     "axes.grid": True, "grid.color": GRID, "grid.linewidth": 0.5,
     "axes.spines.top": False, "axes.spines.right": False,
@@ -56,7 +62,7 @@ plt.rcParams.update({
 
 
 def _flags(r) -> str:
-    """Table I's marks for a failed gate: dagger the port-work residual
+    """The results table's marks for a failed gate: dagger the port-work residual
     (hydraulic_closure[pre]), double dagger the liquid bound (max_principle),
     an asterisk for any other gate, so nothing failed is plotted unmarked."""
     failed = [g for g in (r.get("gates_failed") or "").split(";") if g]
@@ -71,7 +77,7 @@ def _tag(r):
     return f"{r['Qbar_mL_min']:g}" + _flags(r)
 
 
-# --------------------------------------------------------------------- Fig. 1
+# ------------------------------------------------------------ fig_geometry
 def _geometry():
     sys.path.insert(0, str(REPO / "scripts" / "mesh"))
     import k0_blockmesh as K
@@ -117,7 +123,7 @@ def fig_geometry(path):
     # cells (one row seen from the side)
     for xc in xs:
         ax.add_patch(Rectangle((xc - D / 2, 0), D, H, fc=cellc, ec=INK, lw=0.6, zorder=2))
-    fs = 7
+    fs = 8
     tx = dict(fontsize=fs, color=INK, zorder=6)
     # flow arrows
     ar = dict(arrowstyle="-|>", color=COLOR["steady"], lw=0.9, mutation_scale=6)
@@ -128,8 +134,12 @@ def fig_geometry(path):
     ax.text(x0 + xp + 2, 1.5, "floor slot", va="bottom", ha="left", **tx)
     ax.text(x1 - xp - 4, zt + 1.2, "lid slot", va="bottom", ha="right", **tx)
     ax.text(x1 - xp - 4, zt + 8.0, "riser", va="bottom", ha="right", **tx)
-    ax.text(xs[-1] + D / 2 + 1.5, (H + zt) / 2 - 0.3, f"{zt - H:.0f} mm headspace", va="center",
-            ha="left", fontsize=6.5, color=INK, zorder=6)
+    # headspace above the cells: a dimension arrow beside the last cell, labelled below it
+    xh = xs[-1] + D / 2 + 3.0
+    ax.annotate("", (xh, H), (xh, zt), arrowprops=dict(arrowstyle="<->", color=MUTED, lw=0.5,
+                                                       mutation_scale=4, shrinkA=0, shrinkB=0))
+    ax.text(xh - 1.0, H - 0.8, f"{zt - H:.0f} mm headspace", va="top", ha="left", fontsize=fs,
+            color=INK, zorder=6)
     ax.text(xs[0], H / 2, "cell", va="center", ha="center", fontsize=fs, color="white",
             zorder=6, rotation=90)
     # height
@@ -155,14 +165,14 @@ def fig_geometry(path):
                 arrowprops=dict(arrowstyle="-|>", color=INK, lw=0.6, mutation_scale=5))
     ax.text(ox + s * x1 + 10, oz, r"$x$", va="center", ha="left", **tx)
     ax.text(ox + s * x0 - 2, oz, "top view, reduced\nscale; slots hatched", va="center",
-            ha="right", linespacing=0.95, fontsize=6.5, color=INK, zorder=6)
+            ha="right", linespacing=0.95, fontsize=fs, color=INK, zorder=6)
     ax.set_xlim(*xlim)
     ax.set_ylim(*ylim)
     fig.savefig(path)
     plt.close(fig)
 
 
-# --------------------------------------------------------------------- Fig. 2
+# -------------------------------------------------------------- fig_pareto
 # label offsets (points) of the pulsed symbols in panel (a), clear of their neighbours
 PULSED_LABEL_AT = {"C3_Q82.9": (-8, 5), "C3_Q90": (5, 3), "C2p_Q64.2": (6, -2)}
 # the steady 135 label of panel (b) sits above its own dot, clear of the C3 and C2 symbols
@@ -176,8 +186,8 @@ def _main_rows(rows):
 
 def fig_pareto(rows, path):
     rows = [dict(r, dTcell_end_mK=1e3 * r["dTcell_end_K"]) for r in _main_rows(rows)]
-    # one column, panels stacked on a shared energy axis (6-page limit)
-    fig, axs = plt.subplots(2, 1, figsize=(COL_W, 2.2), sharex=True)
+    # one column, panels stacked on a shared energy axis
+    fig, axs = plt.subplots(2, 1, figsize=(COL_W, 2.8), sharex=True)
     for ax, key, lab in ((axs[0], "Tmax_peak_C", r"$T_{\max,\mathrm{pk}}$ (°C)"),
                          (axs[1], "dTcell_end_mK", r"$\Delta T_{\mathrm{cell}}$ (mK)")):
         st = sorted([r for r in rows if r["arm"] == "steady"], key=lambda r: r["E_pump_mJ"])
@@ -193,7 +203,7 @@ def fig_pareto(rows, path):
                                          (3, 3) if key == "Tmax_peak_C" or r["Qbar_mL_min"] < 100
                                          else (-18, 5))
                 ax.annotate(_tag(r), (r["E_pump_mJ"], r[key]), textcoords="offset points",
-                            fontsize=7, color=INK, xytext=at)
+                            fontsize=8, color=INK, xytext=at)
         for arm in ("C1", "C2p", "C3"):
             for role, filled in (("mean-flow", True), ("matched-energy", False)):
                 pts = [r for r in rows if r["arm"] == arm and r["role"] == role]
@@ -210,11 +220,11 @@ def fig_pareto(rows, path):
                 for r in pts:
                     if key == "Tmax_peak_C":
                         ax.annotate(_tag(r), (r["E_pump_mJ"], r[key]), textcoords="offset points",
-                                    fontsize=7, color=INK,
+                                    fontsize=8, color=INK,
                                     xytext=PULSED_LABEL_AT.get(r["key"], (4, -9)))
                     elif _flags(r):
                         ax.annotate(_flags(r), (r["E_pump_mJ"], r[key]), textcoords="offset points",
-                                    fontsize=7, color=INK, xytext=(5, -3))
+                                    fontsize=8, color=INK, xytext=(5, -3))
         ax.set_xscale("log")
         from matplotlib.ticker import LogLocator, FuncFormatter
         ax.xaxis.set_major_locator(LogLocator(base=10, subs=(1.0, 2.0, 5.0)))
@@ -227,7 +237,7 @@ def fig_pareto(rows, path):
     # panel titles inside the axes, in corners clear of the data
     for ax, t, x, ha in ((axs[0], "(a) Peak cell temperature", 0.99, "right"),
                          (axs[1], "(b) Final spread", 0.5, "left")):
-        ax.text(x, 0.96, t, transform=ax.transAxes, ha=ha, va="top", fontsize=7.5,
+        ax.text(x, 0.96, t, transform=ax.transAxes, ha=ha, va="top", fontsize=8,
                 color=INK, bbox=dict(fc="white", ec="none", pad=0.5))
     # one legend entry per arm; filled (mean flow 90 mL/min) and open (reduced mean
     # flow) symbols are explained in the paper's caption
@@ -239,7 +249,7 @@ def fig_pareto(rows, path):
     hs += [Line2D([], [], ls="none", marker=MARKER[a], ms=5.5, mfc="white", mec=COLOR[a],
                   mew=1.1, label=LABEL[a]) for a in ("C1", "C2p", "C3")]
     # legend in the empty upper left of panel (b)
-    axs[1].legend(handles=hs, loc="upper left", frameon=False, fontsize=6.8,
+    axs[1].legend(handles=hs, loc="upper left", frameon=False, fontsize=8,
                   handlelength=1.3, labelspacing=0.15, borderaxespad=0.2,
                   handletextpad=0.4)
     fig.tight_layout(pad=0.3, h_pad=0.3)
@@ -247,31 +257,31 @@ def fig_pareto(rows, path):
     plt.close(fig)
 
 
-# --------------------------------------------------------------------- Fig. 3
+# ----------------------------------------------------------- fig_histories
 def fig_histories(rows, paths, path):
     import aisee_results as AR
-    # the mechanism figure: the same mean flow, Q90 (matched-energy arms are in Fig. 2)
+    # the mechanism figure: the same mean flow, Q90 (matched-energy arms: fig_pareto, fig_matched)
     keys = [r["key"] for r in _main_rows(rows)
             if r["key"] in paths and (r["role"] == "mean-flow" or r["key"] == "steady_Q90")]
     if "steady_Q90" not in keys:
         return
     t_pre = 30.0
     ts, smax_s, _, _ = AR.series(paths["steady_Q90"])
-    fig, axs = plt.subplots(2, 1, figsize=(COL_W, 1.5), sharex=True)
+    fig, axs = plt.subplots(2, 1, figsize=(COL_W, 1.8), sharex=True)
     for k in ["steady_Q90"] + [k for k in keys if k != "steady_Q90"]:
         r = next(x for x in rows if x["key"] == k)
         t, smax, dtc, _ = AR.series(paths[k])
         m = t > t_pre
         arm = r["arm"]
         style = dict(color=COLOR[arm], ls=LS[arm], lw=1.2)
-        # short legend labels (waveform parameters are in Table I), clear of the curves
+        # short legend labels (waveform parameters are in the cases table), clear of the curves
         lab = {"steady": "Steady", "C1": "C1: square 1 Hz", "C3": "C3: sine 2 Hz",
                "C2p": "C2: square 0.5 Hz"}[arm] + _flags(r)
         # top: T_max relative to steady Q90 at the same time since heat-on
         rel = smax[m] - np.interp(t[m], ts, smax_s)
         axs[0].plot(t[m] - t_pre, rel, label=lab, **style)
         axs[1].plot(t[m] - t_pre, 1e3 * dtc[m], **style)
-    # change from steady Q90 at the same time (caption); "delta" is Table I's equal-energy symbol
+    # change from steady Q90 at the same time (caption); "delta" is the results table's equal-energy symbol
     # top label split so only "(K)" sits beside the axis, clear of the bottom label
     axs[0].set_ylabel(r"$T_{\max}$ change" + "\n(K)", linespacing=1.0)
     axs[1].set_ylabel(r"$\Delta T_{\mathrm{cell}}$ (mK)")
@@ -279,11 +289,125 @@ def fig_histories(rows, paths, path):
     axs[1].set_xlim(0, 900)
     h, lbl = axs[0].get_legend_handles_labels()
     # one legend row above the panels, clear of the curves
-    fig.legend(h, lbl, frameon=False, loc="upper center", ncol=3, fontsize=7,
+    fig.legend(h, lbl, frameon=False, loc="upper center", ncol=3, fontsize=8,
                handlelength=2.0, columnspacing=1.2, bbox_to_anchor=(0.55, 1.0),
                borderaxespad=0.1)
     fig.tight_layout(pad=0.3, h_pad=0.4, rect=(0, 0, 1, 0.88))
     fig.align_ylabels(axs)
+    fig.savefig(path)
+    plt.close(fig)
+
+
+# ------------------------------------------------------------- fig_waveforms
+def fig_waveforms(rows, paths, path):
+    """The imposed inlet flow Q(t)/Qbar of each pulsed arm over 2 s, from the
+    case's own switches (case.env) through the case model
+    (housing_physics.waveform_q: the solver's inlet table, 50 ms valve ramps),
+    without the start-up ramp; the legend gives the measured <Q^2>/Qbar^2."""
+    import re
+    sys.path.insert(0, str(REPO / "scripts" / "model"))
+    import housing_physics as HP
+    keys = {r["arm"]: r["key"] for r in _main_rows(rows)
+            if r["role"] == "matched-energy" and r["key"] in paths}
+    if not keys:
+        return
+    t = np.linspace(0.0, 2.0, 8001)
+    fig, ax = plt.subplots(figsize=(COL_W, 1.75))
+    ax.axhline(1.0, color=COLOR["steady"], lw=1.2, label=r"Steady (1)")
+    for arm in ("C1", "C2p", "C3"):
+        if arm not in keys:
+            continue
+        env = dict(re.findall(r"^(?:export\s+)?(\w+)=(.*)$",
+                              (Path(paths[keys[arm]]) / "case.env").read_text(), re.M))
+        cfg = HP.Config.from_env(env)
+        q = HP.waveform_q(cfg, t, ramp=False)
+        qs = np.mean(HP.waveform_q(cfg, np.linspace(0.0, 4.0, 40001)[:-1], ramp=False) ** 2) / \
+            (cfg.qbar_ml_min / 6e7) ** 2
+        lab = {"C1": "C1: square 1 Hz", "C2p": "C2: square 0.5 Hz", "C3": "C3: sine 2 Hz"}[arm]
+        ax.plot(t, q / (cfg.qbar_ml_min / 6e7), color=COLOR[arm], ls=LS[arm], lw=1.2,
+                label=f"{lab} ({qs:.2f})")
+    ax.set_xlim(0, 2)
+    ax.set_ylim(-0.2, 4.4)
+    ax.set_yticks([0, 1, 2, 3, 4])
+    ax.set_xlabel("Time (s)")
+    ax.set_ylabel(r"$Q/\bar Q$")
+    # legend in two rows above the axes, clear of the pulses
+    fig.legend(*ax.get_legend_handles_labels(), loc="upper center", ncol=2, frameon=False,
+               fontsize=8, handlelength=2.0, columnspacing=1.0, labelspacing=0.15,
+               bbox_to_anchor=(0.55, 1.0), borderaxespad=0.1)
+    fig.tight_layout(pad=0.3, rect=(0, 0, 1, 0.83))
+    fig.savefig(path)
+    plt.close(fig)
+
+
+# ------------------------------------------------------------- fig_matched
+def equal_energy_steady(rows, series_of, e):
+    """The steady history at pumping energy e: the computed steady curve's
+    histories interpolated linearly in log E_pump between the two bracketing
+    steady flows, at each time, the rule of Table III's delta columns.
+    series_of(key) -> (t, T_max(t), dT_cell(t)); returns (t, T_max, dT_cell,
+    (key_lo, key_hi, weight)) on the lower steady flow's time grid."""
+    st = sorted([r for r in _main_rows(rows) if r["arm"] == "steady"],
+                key=lambda r: r["E_pump_mJ"])
+    lo = max((r for r in st if r["E_pump_mJ"] <= e), key=lambda r: r["E_pump_mJ"])
+    hi = min((r for r in st if r["E_pump_mJ"] > e), key=lambda r: r["E_pump_mJ"])
+    w = (np.log(e) - np.log(lo["E_pump_mJ"])) / (np.log(hi["E_pump_mJ"]) - np.log(lo["E_pump_mJ"]))
+    t, a_lo, b_lo = series_of(lo["key"])
+    th, a_hi, b_hi = series_of(hi["key"])
+    a = (1 - w) * a_lo + w * np.interp(t, th, a_hi)
+    b = (1 - w) * b_lo + w * np.interp(t, th, b_hi)
+    return t, a, b, (lo["key"], hi["key"], float(w))
+
+
+def fig_matched_histories(rows, paths, path):
+    """T_max(t) of every pulsed case less that of steady flow of equal pumping
+    energy (equal_energy_steady), and the relative change of its spread
+    dT_cell(t), over the discharge; left the reduced mean flows, right the
+    pulsed runs at Q90. The spread change starts SPREAD_FROM_S after heat-on,
+    when the equal-energy steady spreads exceed 14 mK (a ratio of the first
+    mK-level spreads would dominate the scale)."""
+    import aisee_results as AR
+    t_pre = 30.0
+    SPREAD_FROM_S = 60.0
+    cache = {}
+
+    def series_of(k):
+        if k not in cache:
+            t, smax, dtc, _ = AR.series(paths[k])
+            cache[k] = (t, smax, dtc)
+        return cache[k]
+
+    main = _main_rows(rows)
+    groups = [("Reduced mean flow", [r for r in main if r["role"] == "matched-energy"]),
+              (r"$\bar Q$ = 90 mL/min", [r for r in main if r["role"] == "mean-flow"])]
+    if any(r["key"] not in paths for _, g in groups for r in g) or not groups[0][1]:
+        return
+    fig, axs = plt.subplots(2, 2, figsize=(2 * COL_W + 0.16, 2.3), sharex=True, sharey="row")
+    for j, (title, grp) in enumerate(groups):
+        for r in sorted(grp, key=lambda r: ("C1", "C2p", "C3").index(r["arm"])):
+            t, smax, dtc = series_of(r["key"])
+            te, ae, be, _ = equal_energy_steady(rows, series_of, r["E_pump_mJ"])
+            m = t > t_pre
+            style = dict(color=COLOR[r["arm"]], ls=LS[r["arm"]], lw=1.1)
+            lab = {"C1": "C1: square 1 Hz", "C2p": "C2: square 0.5 Hz",
+                   "C3": "C3: sine 2 Hz"}[r["arm"]] + f", {r['Qbar_mL_min']:g} mL/min" + _flags(r)
+            axs[0, j].plot(t[m] - t_pre, smax[m] - np.interp(t[m], te, ae), label=lab, **style)
+            ms = t > t_pre + SPREAD_FROM_S
+            axs[1, j].plot(t[ms] - t_pre, 100 * (dtc[ms] / np.interp(t[ms], te, be) - 1), **style)
+        axs[0, j].set_title(title, fontsize=8, color=INK, pad=3)
+        axs[0, j].legend(loc="upper left", frameon=False, fontsize=8, handlelength=2.2,
+                         labelspacing=0.2, borderaxespad=0.2)
+        for ax in axs[:, j]:
+            ax.axhline(0, color=MUTED, lw=0.6, zorder=1)
+        axs[1, j].set_xlabel("Time since heat-on (s)")
+        axs[1, j].set_xlim(0, 900)
+        axs[1, j].set_xticks(range(0, 901, 150))
+    axs[1, 0].set_yticks(range(-100, 51, 50))
+    # two-line labels, so the two rows' labels stay clear of each other
+    axs[0, 0].set_ylabel(r"$T_{\max}$ difference" + "\n(K)", linespacing=1.0)
+    axs[1, 0].set_ylabel(r"$\Delta T_{\mathrm{cell}}$ change" + "\n(%)", linespacing=1.0)
+    fig.tight_layout(pad=0.3, h_pad=0.4, w_pad=1.2)
+    fig.align_ylabels(axs[:, 0])
     fig.savefig(path)
     plt.close(fig)
 
@@ -293,5 +417,7 @@ def make_all(rows, paths, figdir):
     figdir.mkdir(parents=True, exist_ok=True)
     fig_geometry(figdir / "fig_geometry.pdf")
     fig_pareto(rows, figdir / "fig_pareto.pdf")
+    fig_waveforms(rows, paths, figdir / "fig_waveforms.pdf")
     fig_histories(rows, paths, figdir / "fig_histories.pdf")
+    fig_matched_histories(rows, paths, figdir / "fig_matched.pdf")
     print(f"figures -> {figdir}")

@@ -1,8 +1,8 @@
 # Conjugate CFD Study of Pulsed Dielectric-Fluid Flow for Thermal Management of an 18650 Battery Module at Equal Pump Energy — data and code
 
-Data and code for the paper of the same title, submitted to the 2027
-International Conference on Artificial Intelligence, Smart Electronic & Energy
-Systems (AISEE 2027, IEEE). The study simulates a six-cell 18650 lithium-ion module (2 × 3 cells, 20 mm
+Data and code for the conference paper of the same title, prepared for the
+Innovations in Machine, Engineering and Digital Conference 2027 (IMED-2027,
+Kuala Lumpur, Malaysia, 25–26 January 2027). The study simulates a six-cell 18650 lithium-ion module (2 × 3 cells, 20 mm
 pitch) standing in HFE-7200 (Novec 7200) inside a closed housing, during a 3C
 discharge of 900 s. The model is laminar, variable-property conjugate heat
 transfer, solved with `chtMultiRegionFoam` of OpenFOAM v2606 (ESI) on a
@@ -11,9 +11,10 @@ coarse, medium and fine levels). Steady coolant flow from 90 to
 360 mL min⁻¹ is compared with two square waves (1 Hz, duty 0.25; 0.5 Hz,
 duty 0.5) and a sine wave (2 Hz, amplitude 0.6). This package holds the 14
 scored cases: each case's OpenFOAM setup and every monitor series it wrote,
-the results table of the paper (Table I), the per-case numerical checks, the
-derived temperature histories, and the scripts that regenerate Table I, the
-checks and Figs. 1–3 from the case archives.
+the paper's results table, the per-case numerical checks, the derived
+temperature histories, and the scripts that regenerate the results table, the
+checks and the paper's figures from the case archives (see "Paper
+cross-reference" below).
 
 ## Comparison basis
 
@@ -24,17 +25,40 @@ therefore always costs more pumping energy than steady flow.** Pulsation can
 only be worth its cost if it removes heat better per unit of pumping energy,
 so the primary comparison is at **matched pumping energy**: pulsed points are
 read against the steady curve on fronts of pumping energy against the peak
-cell temperature and against the cell-to-cell spread (Fig. 2). The runs at
-the same mean flow (90 mL min⁻¹) are the mechanism study only (Fig. 3), not
-an energy comparison.
+cell temperature and against the cell-to-cell spread (`fig_pareto.pdf`), and
+each pulsed case is followed through the discharge against steady flow of
+equal pumping energy (`fig_matched.pdf`). The runs at the same mean flow
+(90 mL min⁻¹) are the mechanism study only (`fig_histories.pdf`), not an
+energy comparison.
 
 The pumping energy is measured in each simulation, on the case's own
 isothermal pre-circulation window (t = 2–30 s, whole periods), as the port
 work less the change of the liquid's kinetic energy (and, for square waves,
 less the time-discretisation loss at the valve edges), scaled to the 900 s
 discharge. Once the cells heat up, buoyancy drives the liquid as well, so the
-port work of the heated window is not a pump energy (paper, Section II,
-"Pumping energy").
+port work of the heated window is not a pump energy (paper, Methods,
+"Pumping Energy").
+
+## Paper cross-reference
+
+The paper's tables and figures (version submitted to IMED-2027) and where
+each comes from in this package:
+
+| paper | content | source here |
+|---|---|---|
+| Fig. 1 | housing, to scale | `fig_geometry.pdf` (`scripts/mesh/k0_blockmesh.py`) |
+| Fig. 2 | imposed inlet flow Q(t)/Q̄ | `fig_waveforms.pdf` (each case's `case.env` through `scripts/model/housing_physics.py`) |
+| Table I | cases | "Cases" below; `paper_numbers.py` section 2 |
+| Table II | numerical checks | `data/gates/`; `paper_numbers.py` sections 1 and 5 |
+| Table III | results | `data/aisee_results.csv`; `paper_numbers.py` sections 2 and 3 |
+| Fig. 3 | peak temperature and spread against pumping energy | `fig_pareto.pdf` |
+| Fig. 4 | each pulsed case against steady flow of equal pumping energy over the discharge | `fig_matched.pdf`; `paper_numbers.py` section 6 |
+| Fig. 5 | the same mean flow, 90 mL/min | `fig_histories.pdf`; `paper_numbers.py` section 4 |
+| Tables IV, V | earlier studies; summary of findings | no data of their own (Table V restates Table III and Figs. 3–5) |
+
+The prefix `aisee` in file, variable and case-directory names is the study's
+internal label from its first target venue; the names are kept so that the
+archives, gate records and scripts stay identical to the runs.
 
 ## Directory layout
 
@@ -45,7 +69,7 @@ LICENSE-DATA               CC BY 4.0 (data/ and documentation)
 CITATION.cff, .zenodo.json citation metadata
 requirements.txt           Python versions used
 data/
-  aisee_results.csv        Table I and the checks, one row per case (14 rows)
+  aisee_results.csv        results table and checks, one row per case (14 rows)
   gates/<key>.json         the scorer's numerical checks of each case
   timeseries/<key>.csv.gz  derived temperature histories of each case
   cases/<case>.tar.xz      each case's OpenFOAM setup + monitor output
@@ -53,12 +77,12 @@ data/
                            heatgen.yaml (3C heat polynomial),
                            novec7200_properties.yaml (coolant property fits)
 scripts/
-  reproduce.sh             regenerate Table I, the checks and Figs. 1-3, and compare
+  reproduce.sh             regenerate the results table, checks and figures; compare
   make_timeseries.py       writes data/timeseries/ from the case archives
-  paper_numbers.py         derived numbers: Table I ratios, Table II, Section III
+  paper_numbers.py         derived numbers of the paper (ratios, checks, comparisons)
   check_reproduction.py    compares a regeneration with data/
-  post/aisee_results.py    the scorer: gates, Table I quantities, figures
-  post/aisee_figures.py    Figs. 1-3 (Fig. 1, the housing, drawn from mesh/k0_blockmesh.py)
+  post/aisee_results.py    the scorer: gates, results-table quantities, figures
+  post/aisee_figures.py    the paper's figures (fig_geometry from mesh/k0_blockmesh.py)
   post/housing_metrics.py  the gates (energy ledger, mean flow, time step, ...)
   post/housing_io.py, v1_io.py      readers of the OpenFOAM monitor files and logs
   post/gates.py, pump_energy.py, precirc_check.py, campaign_stats.py, gci2.py
@@ -98,9 +122,9 @@ square waves. The arm labelled C2 in the paper is `C2p` in the data.
 | steady_Q360_cand2 | scheme | steady | 360 | 360 | medium | 12.5 | 900 | h_aisee_steady_Q360_medium_dt12.5_cand2 |
 
 Roles:
-`curve` — the steady curve of Fig. 2;
+`curve` — the steady curve (`fig_pareto.pdf`), also the equal-energy reference of `fig_matched.pdf`;
 `mean-flow` — pulsed at the mean flow of the steady reference, 90 mL/min
-(mechanism study, Fig. 3; costs more energy than steady flow by construction);
+(mechanism study, `fig_histories.pdf`; costs more energy than steady flow by construction);
 `matched-energy` — pulsed at a reduced mean flow, 90/√(⟨Q²⟩/Q̄²) mL/min,
 which a viscous-limit estimate puts at the pumping energy of steady 90 mL/min
 (the comparison itself uses the measured energy);
@@ -112,8 +136,8 @@ Every case is a single realisation.
 
 ## Results table: `data/aisee_results.csv`
 
-One row per case, written by `scripts/post/aisee_results.py` (Table I of the
-paper is taken from it). Floats are printed with 6 significant digits.
+One row per case, written by `scripts/post/aisee_results.py` (the paper's
+results table is taken from it). Floats are printed with 6 significant digits.
 Temperatures in °C are absolute; differences in K. "Heated samples" are the
 monitor samples with t > t_pre.
 
@@ -134,7 +158,7 @@ monitor samples with t > t_pre.
 | `dTcell_mean_K` | time mean of the spread over the heated samples (trapezoidal rule) (K) |
 | `Tmodule_end_C` | module mean temperature at t_end: the six cell volume means weighted by the meshed cell volumes (°C) |
 | `P_pump_uW` | pumping power: (E_port − ΔE_k − E_edge)/(t_b − t_a) on the isothermal window [t_a, t_b] (µW); E_port is the port work, ΔE_k the change of the liquid's kinetic energy, E_edge the valve-edge loss (square waves; 0 otherwise) |
-| `E_pump_mJ` | pumping energy over the 900 s discharge, `P_pump_uW` × 900 s (mJ); the energy axis of Fig. 2 |
+| `E_pump_mJ` | pumping energy over the 900 s discharge, `P_pump_uW` × 900 s (mJ); the energy axis of `fig_pareto.pdf` |
 | `E_pump_raw_mJ` | the same before the valve-edge correction, (E_port − ΔE_k)/(t_b − t_a) × 900 s (mJ) |
 | `E_edge_removed_mJ` | the valve-edge loss removed, E_edge/(t_b − t_a) × 900 s (mJ); E_edge = E_k,exch/n_e², with E_k,exch the total variation of the liquid's kinetic energy over the window and n_e the number of steps per 50 ms valve edge (4 at 12.5 ms, 8 at 6.25 ms); 0 for steady and sine flow |
 | `pump_window_s` | the window [t_a, t_b] (s) on which the pumping energy is measured |
@@ -167,7 +191,7 @@ x, upstream first.
 
 Every case is scored by `scripts/post/housing_metrics.py`, whose hard checks
 ("gates") a case must pass before it enters a figure; a case that fails one
-is kept, flagged in `gates_failed` and marked in the paper (Table I, Fig. 2),
+is kept, flagged in `gates_failed` and marked in the paper's results table and figures,
 never plotted silently. Each JSON file holds `key`, `case_dir`, the list
 `gates` (`name`, `ok`, `detail`) and the scorer's `info` block (energy-ledger
 terms, pumping-energy measurement, Courant maxima and their locations, outlet
@@ -179,7 +203,7 @@ non-finite numbers are written as `null`.
 |---|---|
 | `lattice` | the fixed Δt is commensurate with the waveform: integer steps per period, ON time and valve edge, and monitor sampling |
 | `fixed_dt[log.chtMultiRegionFoam#k]` | every step of solver run k has the fixed Δt |
-| `courant` | Courant number by region: claim-region bulk, the thin cells at the cap plane and in the headspace, and the outflow column at the riser entrance. All runs of this study carry the case generator's `DIAGNOSTIC` flag, and for such runs the Courant maxima are **reported, not gated** (the gate passes and its detail gives the maxima against the nominal limits; the paper reports them in Table II). The three `reused` runs predate the region monitors and report the global maximum |
+| `courant` | Courant number by region: claim-region bulk, the thin cells at the cap plane and in the headspace, and the outflow column at the riser entrance. All runs of this study carry the case generator's `DIAGNOSTIC` flag, and for such runs the Courant maxima are **reported, not gated** (the gate passes and its detail gives the maxima against the nominal limits; the paper reports their ranges in its verification section). The three `reused` runs predate the region monitors and report the global maximum |
 | `max_principle` | the liquid stays between T_in − 0.05 K and the largest cell temperature at every heated sample |
 | `mean_flow` | mean inlet flow over whole periods within 0.5 % of the intended Q̄ |
 | `ledger` | enthalpy ledger of the heated stage closes within 2 % of the injected energy |
@@ -194,8 +218,10 @@ Limitations.
 
 ### Flagged cases
 
-Six cases fail one or two gates (column `gates_failed`) and are flagged in
-Table I and Fig. 2:
+Six cases fail one or two gates (column `gates_failed`). The four in the
+main comparison (steady 135, 180 and 360 mL/min; C1 at 90 mL/min) are marked
+in the paper's results table and figures; the two 360 mL/min check runs enter
+only its numerical checks:
 
 | key | failed gate(s) | detail (from `data/gates/<key>.json`) |
 |---|---|---|
@@ -208,7 +234,7 @@ Table I and Fig. 2:
 
 The steady budget residual is measured against the cell-centred dissipation
 estimate; it grows with the flow rate and falls with mesh refinement while
-the port work changes by less than 0.6 % (paper, Section II, "Pumping energy").
+the port work changes by less than 0.6 % (paper, Methods, "Pumping Energy").
 
 ## Case archives: `data/cases/<case>.tar.xz`
 
@@ -248,14 +274,15 @@ repository that generated or drove the cases (for example
 Those scripts are not needed to run a case and are not part of this
 package; every script that the case files call is (see "Re-running a case").
 
-## Reproducing Table I, the checks and Figs. 1–3
+## Reproducing the results table, the checks and the figures
 
 Requirements: Linux or macOS with bash, GNU tar with xz support, and Python 3
 with numpy, scipy, matplotlib, PyYAML (and pandas, see `requirements.txt`).
 OpenFOAM is not needed.
 
 ```bash
-git clone <this repository> && cd <repository>
+git clone https://github.com/raman3366/pulsed-immersion-cooling-equal-pump-energy.git
+cd pulsed-immersion-cooling-equal-pump-energy   # or the top folder of the Zenodo archive
 bash scripts/reproduce.sh            # or: bash scripts/reproduce.sh /path/to/workdir
 ```
 
@@ -270,22 +297,22 @@ bash scripts/reproduce.sh            # or: bash scripts/reproduce.sh /path/to/wo
        C1_Q90 steady_Q360 steady_Q360_dt6.25 steady_Q135 steady_Q360_cand2 steady_Q180
    ```
 
-   which writes `work/results/aisee_results.csv` (Table I), the gate records
-   `work/results/aisee_cache/<case>.json` and Figs. 1–3
-   `work/results/figures/fig_geometry.pdf`, `fig_pareto.pdf` and
-   `fig_histories.pdf`. The cases named in `--allow-fail` are the six flagged
+   which writes `work/results/aisee_results.csv` (the results table), the gate
+   records `work/results/aisee_cache/<case>.json` and the five figures
+   `work/results/figures/fig_geometry.pdf`, `fig_waveforms.pdf`,
+   `fig_pareto.pdf`, `fig_matched.pdf` and `fig_histories.pdf`. The cases named in `--allow-fail` are the six flagged
    cases above; any other failing gate stops the scorer;
 3. writes the time series to `work/results/timeseries/`;
 4. prints the derived numbers of the paper with `scripts/paper_numbers.py`
    (also saved to `work/results/paper_numbers.txt`): the energy ratios r and
-   r_QS of Table I, the gate summaries and the matched-time Δt/2,
-   limited-gradient and three-mesh comparisons of Table II (with the grid
-   convergence index of the spread), and the matched-energy and
-   matched-mean-flow comparisons of Section III;
+   r_QS, the gate summaries, the matched-time Δt/2, limited-gradient and
+   three-mesh comparisons (with the grid convergence index of the spread),
+   the matched-energy and matched-mean-flow comparisons, and the
+   equal-energy histories;
 5. runs `scripts/check_reproduction.py work/results data`, which requires the
    regenerated table to equal `data/aisee_results.csv` cell by cell, every gate
    record to equal `data/gates/<key>.json`, every time series to equal
-   `data/timeseries/<key>.csv.gz`, and the three figures to exist, and exits
+   `data/timeseries/<key>.csv.gz`, and the five figures to exist, and exits
    non-zero otherwise. (The scorer writes the CSV with CRLF line endings,
    Python's `csv` default; the published file has LF endings. The comparison
    is made cell by cell.)
@@ -476,6 +503,17 @@ The sampled field planes and the full solver logs are kept by the authors and
 are available from the corresponding author on request. Field data and meshes
 were not retained; the meshes are regenerated by each case's `Allrun.pre`.
 
+## References
+
+- Y. Liu, G. Aldan, X. Huang and M. Hao, "Single-phase static immersion
+  cooling for cylindrical lithium-ion battery module," *Appl. Therm. Eng.*,
+  vol. 233, 2023, Art. no. 121184, doi:10.1016/j.applthermaleng.2023.121184
+  (cell properties and the 3C heat-generation polynomial).
+- I. B. Celik et al., "Procedure for estimation and reporting of uncertainty
+  due to discretization in CFD applications," *J. Fluids Eng.*, vol. 130,
+  no. 7, 2008, Art. no. 078001, doi:10.1115/1.2960953 (grid convergence
+  index, `scripts/post/gci2.py`).
+
 ## License
 
 - Code (`scripts/`, `geometry/`): MIT License, see `LICENSE`.
@@ -484,7 +522,8 @@ were not retained; the meshes are regenerated by each case's `Allrun.pre`.
 
 ## How to cite
 
-If you use this data or code, please cite the paper and this dataset:
+If you use this data or code, please cite this dataset (the paper's
+reference is added on publication):
 
 A. R. Lakshmipathi, G. AlZohbi, B. Ratna Sunil and B. Deepanraj,
 *Conjugate CFD Study of Pulsed Dielectric-Fluid Flow for Thermal Management of
