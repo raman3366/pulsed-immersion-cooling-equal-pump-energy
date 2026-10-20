@@ -1,5 +1,7 @@
 # Conjugate CFD Study of Pulsed Dielectric-Fluid Flow for Thermal Management of an 18650 Battery Module at Equal Pump Energy — data and code
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23488229.svg)](https://doi.org/10.5281/zenodo.23488229)
+
 Data and code for the conference paper of the same title, prepared for the
 Innovations in Machine, Engineering and Digital Conference 2027 (IMED-2027,
 Kuala Lumpur, Malaysia, 25–26 January 2027). The study simulates a six-cell 18650 lithium-ion module (2 × 3 cells, 20 mm
@@ -547,7 +549,8 @@ reference is added on publication):
 A. R. Lakshmipathi, G. AlZohbi, B. Ratna Sunil and B. Deepanraj,
 *Conjugate CFD Study of Pulsed Dielectric-Fluid Flow for Thermal Management of
 an 18650 Battery Module at Equal Pump Energy — data and code*, version 1.0.0,
-Zenodo, 2026. DOI: added at the Zenodo release.
+Zenodo, 2026, doi:10.5281/zenodo.23488229
+(https://doi.org/10.5281/zenodo.23488229).
 
 Machine-readable metadata: `CITATION.cff` and `.zenodo.json`.
 

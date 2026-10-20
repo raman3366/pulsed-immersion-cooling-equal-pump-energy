@@ -21,7 +21,9 @@ authors:
     affiliation: "Department of Mechanical Engineering, Prince Mohammad Bin Fahd University, Al-Khobar, Saudi Arabia"
     email: "deepanrajb@ieee.org"
 version: "1.0.0"
-# doi and date-released: added after the Zenodo deposit (the GitHub release mints the DOI)
+# Version DOI of v1.0.0 (Zenodo, from the GitHub release of 20 Oct 2026)
+doi: "10.5281/zenodo.23488229"
+date-released: "2026-10-20"
 repository-code: "https://github.com/raman3366/pulsed-immersion-cooling-equal-pump-energy"
 # CC BY 4.0 for the dataset as a whole (data and documentation); the code in
 # scripts/ and geometry/ is MIT (LICENSE). A CFF license list would mean "or".
